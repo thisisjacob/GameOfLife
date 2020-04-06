@@ -30,6 +30,7 @@ namespace GameOfLife
             InitializeComponent();
             CANVAS_LENGTH = LifeBoard.Width;
             CELL_LENGTH_PIXEL = CANVAS_LENGTH / CELL_LENGTH_NUM;
+            GameLogic.GameStep(lifeCells); // TEST STEPS
         }
     }
 }
