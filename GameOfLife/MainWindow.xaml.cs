@@ -21,9 +21,9 @@ namespace GameOfLife
     
     public partial class MainWindow : Window
     {
-        private readonly double CANVAS_LENGTH;
+        private readonly int CANVAS_LENGTH;
         private const int CELL_LENGTH_NUM = 16;
-        private readonly double CELL_LENGTH_PIXEL;
+        private readonly int CELL_LENGTH_PIXEL;
         private bool[,] lifeCells = new bool[CELL_LENGTH_NUM, CELL_LENGTH_NUM];
         public MainWindow()
         {
@@ -35,9 +35,10 @@ namespace GameOfLife
             lifeCells[6, 9] = true;
             // TESTING
             InitializeComponent();
-            CANVAS_LENGTH = LifeBoard.Width;
+            CANVAS_LENGTH = (int)LifeBoard.Width;
             CELL_LENGTH_PIXEL = CANVAS_LENGTH / CELL_LENGTH_NUM;
             GameLogic.GameStep(lifeCells); // TEST STEPS
+            DrawingHelper.TestDraw(LifeBoard, CELL_LENGTH_PIXEL, CELL_LENGTH_PIXEL, 0, 0);
         }
     }
 }
