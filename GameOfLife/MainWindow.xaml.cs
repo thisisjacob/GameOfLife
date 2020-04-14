@@ -22,11 +22,18 @@ namespace GameOfLife
     public partial class MainWindow : Window
     {
         private readonly double CANVAS_LENGTH;
-        private const int CELL_LENGTH_NUM = 40;
+        private const int CELL_LENGTH_NUM = 16;
         private readonly double CELL_LENGTH_PIXEL;
-        private bool[,] lifeCells = new bool[40, 40];
+        private bool[,] lifeCells = new bool[CELL_LENGTH_NUM, CELL_LENGTH_NUM];
         public MainWindow()
         {
+            // TESTING R-PENTOMINO
+            lifeCells[7, 8] = true;
+            lifeCells[7, 9] = true;
+            lifeCells[8, 9] = true;
+            lifeCells[8, 10] = true;
+            lifeCells[6, 9] = true;
+            // TESTING
             InitializeComponent();
             CANVAS_LENGTH = LifeBoard.Width;
             CELL_LENGTH_PIXEL = CANVAS_LENGTH / CELL_LENGTH_NUM;
