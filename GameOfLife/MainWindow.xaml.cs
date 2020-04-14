@@ -25,17 +25,23 @@ namespace GameOfLife
         private bool[,] lifeCells = new bool[CELL_LENGTH_NUM, CELL_LENGTH_NUM];
         public MainWindow()
         {
+            InitializeComponent();
             // TESTING R-PENTOMINO
             lifeCells[7, 8] = true;
             lifeCells[7, 9] = true;
             lifeCells[8, 9] = true;
-            lifeCells[8, 10] = true;
+            lifeCells[6, 10] = true;
             lifeCells[6, 9] = true;
             // TESTING
 
+            LifeBoard.Loaded += TestGraphics;
+            //
+        }
+
+        private void TestGraphics(object sender, EventArgs e)
+        {
+            lifeCells = GameLogic.GameStep(lifeCells); // TEST STEPS
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
-            //GameLogic.GameStep(lifeCells); // TEST STEPS
-            //DrawingHelper.DrawCell(LifeBoard, CELL_LENGTH_PIXEL, CELL_LENGTH_PIXEL, 0, 0, false);
         }
     }
 }

@@ -38,9 +38,9 @@ namespace GameOfLife
             }
             test.Width = width;
             test.Height = height;
-            Canvas.SetTop(surface, fromTop);
-            Canvas.SetLeft(surface, fromLeft);
             surface.Children.Add(test);
+            Canvas.SetTop(test, fromTop);
+            Canvas.SetLeft(test, fromLeft);
         }
     }
 }
