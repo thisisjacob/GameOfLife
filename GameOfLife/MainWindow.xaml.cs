@@ -34,13 +34,18 @@ namespace GameOfLife
             lifeCells[6, 9] = true;
             // TESTING
 
-            LifeBoard.Loaded += TestGraphics;
+            LifeBoard.Loaded += InitializeLifeBoardGraphics;
             //
         }
 
-        private void TestGraphics(object sender, EventArgs e)
+        private void InitializeLifeBoardGraphics(object sender, EventArgs e)
         {
-            lifeCells = GameLogic.GameStep(lifeCells); // TEST STEPS
+            DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
+        }
+
+        private void AdvanceStep(object sender, RoutedEventArgs e)
+        {
+            lifeCells = GameLogic.GameStep(lifeCells);
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
         }
     }

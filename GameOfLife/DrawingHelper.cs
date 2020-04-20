@@ -10,7 +10,7 @@ namespace GameOfLife
     {
         public static void DrawGameBoard(Canvas surface, bool[,] gameBoard, int cellLengthNum)
         {
-            int canvasLength = (int)surface.Width;
+            int canvasLength = (int)surface.ActualWidth;
             int cellPixelLength = canvasLength / cellLengthNum;
 
             surface.Children.Clear(); // resets surface
