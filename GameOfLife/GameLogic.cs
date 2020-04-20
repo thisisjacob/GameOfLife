@@ -8,13 +8,14 @@ namespace GameOfLife
     {
         public static bool[,] GameStep(bool[,] givenBoard)
         {
-            bool[,] newBoard = (bool[,])givenBoard.Clone();
+            bool[,] newBoard = new bool[givenBoard.GetLength(0), givenBoard.GetLength(1)];
+
 
             for (int i = 0; i < givenBoard.GetLength(0); i++) 
             {
                 for (int j = 0; j < givenBoard.GetLength(1); j++)
                 {
-                    NewCellStatus(i, j, givenBoard);
+                    newBoard[i, j] = NewCellStatus(i, j, givenBoard);
                 }
             }
 
@@ -27,19 +28,16 @@ namespace GameOfLife
         // Return false otherwise
         public static bool NewCellStatus(int i, int j, bool[,] originalArray)
         {
-            bool status = true;
+            bool status = originalArray[i, j];
             int liveNeighbors = 0;
 
             for (int y = -1; y < 2; y++)
             {
                 for (int x = -1; x < 2; x++)
                 {
-                    if (BoundaryCheck(i, j, y, x, originalArray.GetLength(0), originalArray.GetLength(1)))
+                    if (BoundaryCheck(i, j, y, x, originalArray.GetLength(0), originalArray.GetLength(1)) && !(y == 0 && x == 0) && originalArray[i + y, j + x] == true)
                     {
-                        if (y != 0 && x != 0 && originalArray[i + y, j + x] == true)
-                        {
-                            liveNeighbors++;
-                        }
+                        liveNeighbors++;
                     }
                 }
             }
@@ -61,21 +59,21 @@ namespace GameOfLife
             return status;
         }
 
+
         public static bool BoundaryCheck(int i, int j, int plusI, int plusJ, int maxISize, int maxJSize)
         {
-            bool isValid = true;
+
             if ((i + plusI) < 0 || (i + plusI) > maxISize - 1)
             {
-                isValid = false;
+                return false;
             }
 
             if ((j + plusJ) < 0 || (j + plusJ) > maxJSize - 1)
             {
-                isValid = false;
+                return false;
             }
 
-            return isValid;
+            return true;
         }
-
     }
 }
