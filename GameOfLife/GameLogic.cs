@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls;
 
 namespace GameOfLife
 {
@@ -74,6 +75,26 @@ namespace GameOfLife
             }
 
             return true;
+        }
+
+        // 
+        public static bool[,] SwitchStatus(Canvas surface, bool[,] gameBoard, int x, int y, int cellLengthPixels)
+        {
+            bool[,] newGameBoard = (bool[,])gameBoard.Clone();
+            int xCell = x / cellLengthPixels;
+            int yCell = y / cellLengthPixels;
+
+
+            if (gameBoard[y, x] == true)
+            {
+                newGameBoard[y, x] = false;
+            }
+            else
+            {
+                newGameBoard[y, x] = true;
+            }
+
+            return newGameBoard;
         }
     }
 }

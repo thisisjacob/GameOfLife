@@ -48,5 +48,19 @@ namespace GameOfLife
             lifeCells = GameLogic.GameStep(lifeCells);
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
         }
+
+        private void CanvasMouseMovement(object sender, RoutedEventArgs e)
+        {
+            Point position = Mouse.GetPosition(sender as Canvas);
+            DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM); // redraws entire board, removing old highlight
+            DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, CELL_LENGTH_NUM);
+        }
+
+        private void CanvasCellClicked(object sender, RoutedEventArgs e)
+        {
+            Point position = Mouse.GetPosition(sender as Canvas);
+            lifeCells = GameLogic.SwitchStatus(LifeBoard, lifeCells, (int)position.Y, (int)position.X, (int) LifeBoard.ActualWidth / CELL_LENGTH_NUM);
+            DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
+        }
     }
 }

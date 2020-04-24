@@ -42,5 +42,25 @@ namespace GameOfLife
             Canvas.SetTop(test, fromTop);
             Canvas.SetLeft(test, fromLeft);
         }
+
+        public static void DrawHighlightedCell(Canvas surface, int xPos, int yPos, int cellLengthNum)
+        {
+            int canvasLength = (int)surface.ActualWidth;
+            int cellPixelLength = canvasLength / cellLengthNum;
+            int xIndex = xPos / cellPixelLength;
+            int yIndex = yPos / cellPixelLength;
+
+            System.Windows.Shapes.Rectangle newRect = new System.Windows.Shapes.Rectangle
+            {
+                Width = cellPixelLength,
+                Height = cellPixelLength,
+                Fill = Brushes.LightBlue,
+                Stroke = Brushes.Black
+            };
+
+            surface.Children.Add(newRect);
+            Canvas.SetTop(newRect, yIndex * cellPixelLength);
+            Canvas.SetLeft(newRect, xIndex * cellPixelLength);
+        }
     }
 }
