@@ -32,15 +32,22 @@ namespace GameOfLife
             lifeCells[8, 9] = true;
             lifeCells[6, 10] = true;
             lifeCells[6, 9] = true;
-            // TESTING
+            // testing
 
-            LifeBoard.Loaded += InitializeLifeBoardGraphics;
-            //
+            LifeBoard.Loaded += InitializeLifeBoardGraphics; // initializes board
+            
         }
 
         private void InitializeLifeBoardGraphics(object sender, EventArgs e)
         {
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
+            foreach (object child in LifeBoard.Children)
+            {
+                if (child is Rectangle)
+                {
+                    (child as Rectangle).PreviewMouseLeftButtonUp += CanvasCellClicked;
+                }
+            }
         }
 
         private void AdvanceStep(object sender, RoutedEventArgs e)
@@ -56,9 +63,9 @@ namespace GameOfLife
             DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, CELL_LENGTH_NUM);
         }
 
-        private void CanvasCellClicked(object sender, RoutedEventArgs e)
+        public void CanvasCellClicked(object sender, RoutedEventArgs e)
         {
-            Point position = Mouse.GetPosition(sender as Canvas);
+            Point position = Mouse.GetPosition(LifeBoard);
             lifeCells = GameLogic.SwitchStatus(LifeBoard, lifeCells, (int)position.Y, (int)position.X, (int) LifeBoard.ActualWidth / CELL_LENGTH_NUM);
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
         }
