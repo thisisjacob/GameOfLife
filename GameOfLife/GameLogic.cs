@@ -85,13 +85,13 @@ namespace GameOfLife
             int yCell = y / cellLengthPixels;
 
 
-            if (gameBoard[y, x] == true)
+            if (gameBoard[yCell, xCell] == true)
             {
-                newGameBoard[y, x] = false;
+                newGameBoard[yCell, xCell] = false;
             }
             else
             {
-                newGameBoard[y, x] = true;
+                newGameBoard[yCell, xCell] = true;
             }
 
             return newGameBoard;

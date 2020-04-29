@@ -41,13 +41,6 @@ namespace GameOfLife
         private void InitializeLifeBoardGraphics(object sender, EventArgs e)
         {
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
-            foreach (object child in LifeBoard.Children)
-            {
-                if (child is Rectangle)
-                {
-                    (child as Rectangle).PreviewMouseLeftButtonUp += CanvasCellClicked;
-                }
-            }
         }
 
         private void AdvanceStep(object sender, RoutedEventArgs e)
@@ -56,6 +49,7 @@ namespace GameOfLife
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
         }
 
+        // MouseMove="CanvasMouseMovement" RESTORE THIS ONTO LIFEBOARD HANDLERS WHEN SUPPRESSION OF MOUSEBUTTONUP FIXED
         private void CanvasMouseMovement(object sender, RoutedEventArgs e)
         {
             Point position = Mouse.GetPosition(sender as Canvas);
@@ -63,10 +57,11 @@ namespace GameOfLife
             DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, CELL_LENGTH_NUM);
         }
 
+        // does not fire because MouseMove event is constantly firing and overriding this
         public void CanvasCellClicked(object sender, RoutedEventArgs e)
         {
             Point position = Mouse.GetPosition(LifeBoard);
-            lifeCells = GameLogic.SwitchStatus(LifeBoard, lifeCells, (int)position.Y, (int)position.X, (int) LifeBoard.ActualWidth / CELL_LENGTH_NUM);
+            lifeCells = GameLogic.SwitchStatus(LifeBoard, lifeCells, (int)position.X, (int)position.Y, (int) LifeBoard.ActualWidth / CELL_LENGTH_NUM);
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
         }
     }
