@@ -49,11 +49,11 @@ namespace GameOfLife
             DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
         }
 
-        // MouseMove="CanvasMouseMovement" RESTORE THIS ONTO LIFEBOARD HANDLERS WHEN SUPPRESSION OF MOUSEBUTTONUP FIXED
+
         private void CanvasMouseMovement(object sender, RoutedEventArgs e)
         {
             Point position = Mouse.GetPosition(sender as Canvas);
-            DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM); // redraws entire board, removing old highlight
+            DrawingHelper.RedrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
             DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, CELL_LENGTH_NUM);
         }
 

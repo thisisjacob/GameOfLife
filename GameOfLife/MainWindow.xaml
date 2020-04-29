@@ -19,7 +19,7 @@
             </Button>
         </Menu>
 
-        <Canvas Grid.Row="1" Height="Auto" Width="Auto" Name="LifeBoard"   MouseLeftButtonUp="CanvasCellClicked">
+        <Canvas Grid.Row="1" Height="Auto" Width="Auto" Name="LifeBoard" MouseMove="CanvasMouseMovement" MouseLeftButtonUp="CanvasCellClicked">
             <Canvas.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </Canvas.Background>
