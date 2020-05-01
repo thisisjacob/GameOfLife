@@ -21,43 +21,43 @@ namespace GameOfLife
     
     public partial class MainWindow : Window
     {
-        private GameState mainGame = new GameState(32);
-        private const int CELL_LENGTH_NUM = 32;
-        private bool[,] lifeCells = new bool[CELL_LENGTH_NUM, CELL_LENGTH_NUM];
+        private GameState mainGame;
         public MainWindow()
         {
             InitializeComponent();
-            LifeBoard.Loaded += InitializeLifeBoardGraphics; // initializes board
-            
+            LifeBoard.Loaded += InitializeProgram; // initializes board
         }
 
         // When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
-        private void InitializeLifeBoardGraphics(object sender, EventArgs e)
+        private void InitializeProgram(object sender, EventArgs e)
         {
+            mainGame = new GameState(32, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight);
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state
         private void AdvanceStep(object sender, RoutedEventArgs e)
         {
-            lifeCells = GameLogic.GameStep(lifeCells);
-            DrawingHelper.RedrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
+            mainGame.GameStep();
+            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
         }
 
         // When fired, finds the position of the cursor, redraws the canvas and then highlights the cell the cursor is over
         private void CanvasMouseMovement(object sender, RoutedEventArgs e)
         {
             Point position = Mouse.GetPosition(sender as Canvas);
-            DrawingHelper.RedrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
-            DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, CELL_LENGTH_NUM);
+            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, mainGame);
         }
 
         // When fired, finds the position of the cursor, flips the status of the cell (dead/alive or false/true) and then redraws the canvas
         public void CanvasCellClicked(object sender, RoutedEventArgs e)
         {
             Point position = Mouse.GetPosition(LifeBoard);
-            lifeCells = GameLogic.SwitchStatus(LifeBoard, lifeCells, (int)position.X, (int)position.Y, (int) LifeBoard.ActualWidth / CELL_LENGTH_NUM);
-            DrawingHelper.RedrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
+            mainGame.SwitchStatus((int)position.X, (int)position.Y);
+            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
         }
+
+
     }
 }

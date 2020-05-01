@@ -28,17 +28,17 @@ namespace GameOfLife
 
         // Redraws all the items without creating new rectangle objects
         // Essentially just sets their fill and border colors to match their current state (alive/dead)
-        public static void RedrawGameBoard(Canvas surface, bool[,] gameBoard, int cellLengthNum) 
+        public static void RedrawGameBoard(Canvas surface, GameState givenGame) 
         {
 
-            for (int i = 0; i < cellLengthNum; i++)
+            for (int i = 0; i < givenGame.Length(); i++)
             {
-                for (int j = 0; j < cellLengthNum; j++)
+                for (int j = 0; j < givenGame.Length(); j++)
                 {
-                    int surfaceChildIndex = (i * cellLengthNum) + j;
+                    int surfaceChildIndex = (i * givenGame.Length()) + j;
                     if (surface.Children[surfaceChildIndex] is Rectangle)
                     {
-                        RedrawCell((surface.Children[surfaceChildIndex] as Rectangle), gameBoard[i, j]);
+                        RedrawCell((surface.Children[surfaceChildIndex] as Rectangle), givenGame.GameStatus()[i, j]);
                     }
                     else
                     {
@@ -86,13 +86,13 @@ namespace GameOfLife
         }
 
         // Finds the rectangle matching the xPos and yPos given, sets its color to differentiate it from other cells 
-        public static void DrawHighlightedCell(Canvas surface, int xPos, int yPos, int cellLengthNum)
+        public static void DrawHighlightedCell(Canvas surface, int xPos, int yPos, GameState givenGame)
         {
             int canvasLength = (int)surface.ActualWidth;
-            int cellPixelLength = canvasLength / cellLengthNum;
+            int cellPixelLength = canvasLength / givenGame.Length();
             int xIndex = xPos / cellPixelLength;
             int yIndex = yPos / cellPixelLength;
-            int surfaceChildIndex = (yIndex * cellLengthNum) + xIndex;
+            int surfaceChildIndex = (yIndex * givenGame.Length()) + xIndex;
 
             if (surface.Children[surfaceChildIndex] is Rectangle)
             {

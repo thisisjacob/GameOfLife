@@ -10,17 +10,25 @@ namespace GameOfLife
     public class GameState
     {
         private readonly int cellLengthNum;
+        private readonly int cellLengthPixels;
         private bool[,] lifeCells;
 
         // Initializes GameState with a length of the given gameWidth
         // Integer must be greater than 0, an ArgumentOutOfRangeException is thrown if it is less than 0
-        public GameState(int gameWidth)
+        public GameState(int gameWidth, int pixelsWidth, int pixelsHeight)
         {
-            if (gameWidth <= 0)
+            if (gameWidth <= 0 || pixelsWidth <= 0)
             {
                 throw new ArgumentOutOfRangeException("Error creating new GameState: Given Integer less than or equal to 0");
             }
+            
+            if (pixelsWidth != pixelsHeight)
+            {
+                throw new ArgumentException("Error creating new GameState: Height and Width are not equal.");
+            }
+
             cellLengthNum = gameWidth;
+            cellLengthPixels = pixelsWidth;
             lifeCells = new bool[gameWidth, gameWidth];
         }
 
@@ -37,9 +45,9 @@ namespace GameOfLife
         }
 
         // Iterates through each cell in a board and returns an array holding the dead/alive status of the new turn
-        public bool[,] GameStep()
+        public void GameStep()
         {
-            bool[,] newBoard = new bool[cellLengthNum, cellLengthNum];
+            bool[,] newBoard = new bool[cellLengthNum, cellLengthNum]; // temporary array for holding modifications
 
 
             for (int i = 0; i < cellLengthNum; i++)
@@ -50,14 +58,32 @@ namespace GameOfLife
                 }
             }
 
-            return newBoard;
+            lifeCells = newBoard;
+        }
+
+        // If selected cell (int x, int y) is true, set the selected cell to false
+        // Otherwise, set the selected cell to true
+        public void SwitchStatus(int j, int i)
+        {
+            int xCell = j / (cellLengthPixels / cellLengthNum);
+            int yCell = i / (cellLengthPixels / cellLengthNum);
+
+
+            if (lifeCells[yCell, xCell] == true)
+            {
+                lifeCells[yCell, xCell] = false;
+            }
+            else
+            {
+                lifeCells[yCell, xCell] = true;
+            }
         }
 
         // Checks the status of nearby cells
         // If currently selected cell (based on 1st and 2nd dimension indexes, i and j respectively) should be alive
         // then return true. return false otherwise
         // Return false otherwise
-        public bool NewCellStatus(int i, int j)
+        private bool NewCellStatus(int i, int j)
         {
             bool status = lifeCells[i, j];
             int liveNeighbors = 0;
@@ -92,7 +118,7 @@ namespace GameOfLife
 
         // Returns true if the examined cell (i + plusI)(j + plusJ) is within the constraints of maxISize and maxJSize
         // Returns false otherwise
-        public bool BoundaryCheck(int i, int j, int plusI, int plusJ)
+        private bool BoundaryCheck(int i, int j, int plusI, int plusJ)
         {
 
             if ((i + plusI) < 0 || (i + plusI) > cellLengthNum - 1)
@@ -107,6 +133,8 @@ namespace GameOfLife
 
             return true;
         }
+
+
 
 
     }
