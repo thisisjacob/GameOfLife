@@ -10,6 +10,7 @@ namespace GameOfLife
 {
     public static class DrawingHelper
     {
+        // Fills the canvas with new and equally sized rectangles representing the cells of the Game of Life
         public static void DrawGameBoard(Canvas surface, bool[,] gameBoard, int cellLengthNum)
         {
             int canvasLength = (int)surface.ActualWidth;
@@ -48,6 +49,7 @@ namespace GameOfLife
 
         }
 
+        // Creates a new rectangle, sets its appearance based on its isAlive status, adds to to surface
         public static void DrawCell(Canvas surface, int width, int height, int fromLeft, int fromTop, bool isAlive)
         {
             Rectangle test = new Rectangle();
@@ -68,6 +70,7 @@ namespace GameOfLife
             Canvas.SetLeft(test, fromLeft);
         }
 
+        // Sets givenCell to match the theme color with its isAlive status
         public static void RedrawCell(Rectangle givenCell, bool isAlive)
         {
             if (isAlive)
@@ -82,6 +85,7 @@ namespace GameOfLife
             }
         }
 
+        // Finds the rectangle matching the xPos and yPos given, sets its color to differentiate it from other cells 
         public static void DrawHighlightedCell(Canvas surface, int xPos, int yPos, int cellLengthNum)
         {
             int canvasLength = (int)surface.ActualWidth;

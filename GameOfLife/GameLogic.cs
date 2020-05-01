@@ -7,6 +7,7 @@ namespace GameOfLife
 {
     public static class GameLogic
     {
+        // Iterates through each cell in a board and returns an array holding the dead/alive status of the new turn
         public static bool[,] GameStep(bool[,] givenBoard)
         {
             bool[,] newBoard = new bool[givenBoard.GetLength(0), givenBoard.GetLength(1)];
@@ -60,7 +61,8 @@ namespace GameOfLife
             return status;
         }
 
-
+        // Returns true if the examined cell (i + plusI)(j + plusJ) is within the constraints of maxISize and maxJSize
+        // Returns false otherwise
         public static bool BoundaryCheck(int i, int j, int plusI, int plusJ, int maxISize, int maxJSize)
         {
 
@@ -77,7 +79,8 @@ namespace GameOfLife
             return true;
         }
 
-        // 
+        // If selected cell (int x, int y) is true, set the selected cell to false
+        // Otherwise, set the selected cell to true
         public static bool[,] SwitchStatus(Canvas surface, bool[,] gameBoard, int x, int y, int cellLengthPixels)
         {
             bool[,] newGameBoard = (bool[,])gameBoard.Clone();
