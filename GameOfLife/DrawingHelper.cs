@@ -11,17 +11,17 @@ namespace GameOfLife
     public static class DrawingHelper
     {
         // Fills the canvas with new and equally sized rectangles representing the cells of the Game of Life
-        public static void DrawGameBoard(Canvas surface, bool[,] gameBoard, int cellLengthNum)
+        public static void DrawGameBoard(Canvas surface, GameState givenGame)
         {
             int canvasLength = (int)surface.ActualWidth;
-            int cellPixelLength = canvasLength / cellLengthNum;
+            int cellPixelLength = canvasLength / givenGame.Length();
 
             surface.Children.Clear(); // resets surface
-            for (int i = 0; i < cellLengthNum; i++)
+            for (int i = 0; i < givenGame.Length(); i++)
             {
-                for (int j = 0; j < cellLengthNum; j++)
+                for (int j = 0; j < givenGame.Length(); j++)
                 {
-                    DrawCell(surface, cellPixelLength, cellPixelLength, j * cellPixelLength, i * cellPixelLength, gameBoard[i, j]);
+                    DrawCell(surface, cellPixelLength, cellPixelLength, j * cellPixelLength, i * cellPixelLength, givenGame.GameStatus()[i, j]);
                 }
             }
         }

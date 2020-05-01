@@ -21,6 +21,7 @@ namespace GameOfLife
     
     public partial class MainWindow : Window
     {
+        private GameState mainGame = new GameState(32);
         private const int CELL_LENGTH_NUM = 32;
         private bool[,] lifeCells = new bool[CELL_LENGTH_NUM, CELL_LENGTH_NUM];
         public MainWindow()
@@ -33,7 +34,7 @@ namespace GameOfLife
         // When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
         private void InitializeLifeBoardGraphics(object sender, EventArgs e)
         {
-            DrawingHelper.DrawGameBoard(LifeBoard, lifeCells, CELL_LENGTH_NUM);
+            DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state
