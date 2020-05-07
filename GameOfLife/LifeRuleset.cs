@@ -22,16 +22,34 @@ namespace GameOfLife
             {
                 throw new ArgumentException("The rulesets are invalid: Shared values");
             }
-            else if (AreThereAnyMissingDigits(givenGrowthArray, givenLiveArray, givenDeathArray))
+            else if (AreThereAnyMissingDigits(givenGrowthArray, givenLiveArray, givenDeathArray)) // if there are any missing digits (0-9), the ruleset is invalid. throw exception
             {
                 throw new ArgumentException("The rulesets are invalid: Missing digits");
             }
-            else
+            else // the ruleset is valid, initialize variables
             {
                 neighborsToGrow = givenGrowthArray;
                 neighborsToLive = givenLiveArray;
                 neighborsToDie = givenDeathArray;
             }
+        }
+
+        // Returns an int[] of the digits of neighbors that lead to a cell coming alive
+        public int[] GetGrowthArray()
+        {
+            return (int[])neighborsToGrow.Clone();
+        }
+
+        // Returns an int[] of the digits of neighbors that lead to a cell remaining alive (or dead)
+        public int[] GetLivingArray()
+        {
+            return (int[])neighborsToLive.Clone();
+        }
+
+        // Returns an int[] of the digits of neighbors that lead to a cell dying (or remaining dead)
+        public int[] GetDeathArray()
+        {
+            return (int[])neighborsToDie.Clone();
         }
 
         // Compares three int arrays
