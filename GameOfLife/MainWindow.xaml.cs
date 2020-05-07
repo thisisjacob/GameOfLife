@@ -21,7 +21,8 @@ namespace GameOfLife
     
     public partial class MainWindow : Window
     {
-        private GameState mainGame;
+        private GameState mainGame; // Object for holding the current status of the game
+        private bool isPlaying = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -58,6 +59,15 @@ namespace GameOfLife
             DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
         }
 
+        public void Play(object sender, RoutedEventArgs e)
+        {
+            isPlaying = true;
+        }
+
+        public void Stop(object sender, RoutedEventArgs e)
+        {
+            isPlaying = false;
+        }
 
     }
 }

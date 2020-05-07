@@ -17,6 +17,12 @@
             <Button Click="AdvanceStep">
                 Advance Step
             </Button>
+            <Button Click="Play">
+                Play
+            </Button>
+            <Button Click="Stop">
+                Stop
+            </Button> 
         </Menu>
 
         <Canvas Grid.Row="1" Height="Auto" Width="Auto" Name="LifeBoard" MouseMove="CanvasMouseMovement" MouseLeftButtonUp="CanvasCellClicked">
