@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ namespace GameOfLife
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
+
     public partial class MainWindow : Window
     {
         private GameState mainGame; // Object for holding the current status of the game
@@ -30,21 +31,28 @@ namespace GameOfLife
         }
 
         // When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
-        private void InitializeProgram(object sender, EventArgs e)
+        void InitializeProgram(object sender, EventArgs e)
         {
             mainGame = new GameState(32, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight);
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state
-        private void AdvanceStep(object sender, RoutedEventArgs e)
+        void AdvanceStep(object sender, RoutedEventArgs e)
         {
             mainGame.GameStep();
             DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
         }
 
+        // When fired, move mainGame back one step in history, redraw game board
+        void ReverseStep(object sender, RoutedEventArgs e)
+        {
+            mainGame.GoBackStep();
+            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+        }
+
         // When fired, finds the position of the cursor, redraws the canvas and then highlights the cell the cursor is over
-        private void CanvasMouseMovement(object sender, RoutedEventArgs e)
+        void CanvasMouseMovement(object sender, RoutedEventArgs e)
         {
             Point position = Mouse.GetPosition(sender as Canvas);
             DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
@@ -59,11 +67,13 @@ namespace GameOfLife
             DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
         }
 
-        public void Play(object sender, RoutedEventArgs e)
+        // does nothing meaningful for now
+        public async void Play(object sender, RoutedEventArgs e)
         {
             isPlaying = true;
         }
 
+        // does nothing meaningful for now
         public void Stop(object sender, RoutedEventArgs e)
         {
             isPlaying = false;

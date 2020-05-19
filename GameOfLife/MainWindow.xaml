@@ -14,14 +14,17 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <Button Click="AdvanceStep">
+            <Button Name="AdvanceButton" Click="AdvanceStep">
                 Advance Step
             </Button>
-            <Button Click="Play">
-                Play
+            <Button Name="ReverseButton" Click="ReverseStep">
+                Reverse Step
             </Button>
-            <Button Click="Stop">
-                Stop
+            <Button Name="PlayButton" Click="Play">
+                Play (DISABLED)
+            </Button>
+            <Button Name="StopButton" Click="Stop">
+                Stop (DISABLED)
             </Button> 
         </Menu>
 
