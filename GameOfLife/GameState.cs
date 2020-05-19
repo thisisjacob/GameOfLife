@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GameOfLife
@@ -9,14 +10,15 @@ namespace GameOfLife
     // Has methods for retrieving the length of the x/y axis of the bool[,], with each axis of equal length
     public class GameState
     {
-        private readonly int cellLengthNum;
-        private readonly int cellLengthPixels;
-        private bool[,] lifeCells;
-        private Stack<bool[,]> lifeCellsHistory;
+        readonly int cellLengthNum;
+        readonly int cellLengthPixels;
+        bool[,] lifeCells;
+        readonly Stack<bool[,]> lifeCellsHistory;
+        readonly LifeRuleset currentRules;
 
         // Initializes GameState with a length of the given gameWidth
         // Integer must be greater than 0, an ArgumentOutOfRangeException is thrown if it is less than 0
-        public GameState(int gameWidth, int pixelsWidth, int pixelsHeight)
+        public GameState(int gameWidth, int pixelsWidth, int pixelsHeight, LifeRuleset givenRules)
         {
             if (gameWidth <= 0 || pixelsWidth <= 0)
                 throw new ArgumentOutOfRangeException("Error creating new GameState: Given Integer less than or equal to 0");
@@ -28,6 +30,7 @@ namespace GameOfLife
             cellLengthNum = gameWidth;
             cellLengthPixels = pixelsWidth;
             lifeCells = new bool[gameWidth, gameWidth];
+            currentRules = givenRules;
         }
 
         // Returns the length of the both sides of the game board as an int
@@ -90,14 +93,12 @@ namespace GameOfLife
 
             for (int y = -1; y < 2; y++)
                 for (int x = -1; x < 2; x++)
-                    if (BoundaryCheck(i, j, y, x) && !(y == 0 && x == 0) && lifeCells[i + y, j + x] == true)
+                    if (BoundaryCheck(i, j, y, x) && !(y == 0 && x == 0) && lifeCells[i + y, j + x])
                         liveNeighbors++;
 
-            if (liveNeighbors < 2)
+            if (currentRules.GetDeathArray().Contains(liveNeighbors))
                 status = false;
-            else if (liveNeighbors > 3)
-                status = false;
-            else if (liveNeighbors == 3)
+            else if (currentRules.GetGrowthArray().Contains(liveNeighbors))
                 status = true;
 
             return status;

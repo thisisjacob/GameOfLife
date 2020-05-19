@@ -7,9 +7,9 @@ namespace GameOfLife
 {
     public class LifeRuleset
     {
-        int[] neighborsToGrow;
-        int[] neighborsToLive;
-        int[] neighborsToDie;
+        readonly int[] neighborsToGrow;
+        readonly int[] neighborsToLive;
+        readonly int[] neighborsToDie;
 
         // Initializes the ruleset
         // givenGrowthArray holds the number of neighbors that leads to a new live cell
@@ -58,7 +58,7 @@ namespace GameOfLife
         private bool DoArraysIntersect(int[] first, int[] second, int[] third)
         {
             // at least one value is shared between the three arrays, return true
-            if (first.Intersect(second).Count() == 0 || first.Intersect(third).Count() == 0 || second.Intersect(third).Count() == 0)
+            if (first.Intersect(second).Count() != 0 || first.Intersect(third).Count() != 0 || second.Intersect(third).Count() != 0)
             {
                 return true;
             }
@@ -71,10 +71,11 @@ namespace GameOfLife
         // If there are no missing digits return false
         private bool AreThereAnyMissingDigits(int[] first, int[] second, int[] third)
         {
+            List<int> digits = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             List<int> digitsLeft = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             // if an element of digitsLeft is in any of the parameter int arrays, remove that element from digitsLeft
-            foreach (int element in digitsLeft)
+            foreach (int element in digits)
             {
                 if (first.Contains(element) || second.Contains(element) || third.Contains(element))
                 {

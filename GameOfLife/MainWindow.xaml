@@ -25,7 +25,10 @@
             </Button>
             <Button Name="StopButton" Click="Stop">
                 Stop (DISABLED)
-            </Button> 
+            </Button>
+            <Button Name="Setup" Click="OpenSetupMenu">
+                Setup
+            </Button>
         </Menu>
 
         <Canvas Grid.Row="1" Height="Auto" Width="Auto" Name="LifeBoard" MouseMove="CanvasMouseMovement" MouseLeftButtonUp="CanvasCellClicked">

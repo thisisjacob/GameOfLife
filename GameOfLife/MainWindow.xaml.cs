@@ -22,8 +22,9 @@ namespace GameOfLife
 
     public partial class MainWindow : Window
     {
-        private GameState mainGame; // Object for holding the current status of the game
-        private bool isPlaying = false;
+        GameState mainGame; // Object for holding the current status of the game
+        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 });
+        bool isPlaying = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace GameOfLife
         // When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
         void InitializeProgram(object sender, EventArgs e)
         {
-            mainGame = new GameState(32, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight);
+            mainGame = new GameState(32, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
         }
 
@@ -77,6 +78,11 @@ namespace GameOfLife
         public void Stop(object sender, RoutedEventArgs e)
         {
             isPlaying = false;
+        }
+
+        public void OpenSetupMenu(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }
