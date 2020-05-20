@@ -18,12 +18,8 @@ namespace GameOfLife
 
             surface.Children.Clear(); // resets surface
             for (int i = 0; i < givenGame.Length(); i++)
-            {
                 for (int j = 0; j < givenGame.Length(); j++)
-                {
                     DrawCell(surface, cellPixelLength, cellPixelLength, j * cellPixelLength, i * cellPixelLength, givenGame.GameStatus()[i, j]);
-                }
-            }
         }
 
         // Redraws all the items without creating new rectangle objects
@@ -95,13 +91,9 @@ namespace GameOfLife
             int surfaceChildIndex = (yIndex * givenGame.Length()) + xIndex;
 
             if (surface.Children[surfaceChildIndex] is Rectangle)
-            {
                 (surface.Children[surfaceChildIndex] as Rectangle).Fill = Brushes.LightBlue;
-            }
             else
-            {
                 throw new NotSupportedException("Children in " + surface.Name + " is not a Rectangle item"); // item in children is not a rectangle, throw exception
-            }
 
         }
     }
