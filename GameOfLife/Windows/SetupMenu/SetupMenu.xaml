@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife"
         mc:Ignorable="d"
-        Title="SetupMenu" Height="450" Width="800">
+        Title="SetupMenu" Height="550" Width="800"
+        ResizeMode="NoResize">
     <StackPanel>
         <Grid Name="LivingSelector" Height="100">
             <Grid.ColumnDefinitions>
@@ -16,28 +17,25 @@
                 Living
             </TextBlock>
             <Grid Grid.Column="1" Width="300" Height="50">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0">0</Button>
-                <Button Grid.Column="1">1</Button>
-                <Button Grid.Column="2">2</Button>
-                <Button Grid.Column="3">3</Button>
-                <Button Grid.Column="4">4</Button>
-                <Button Grid.Column="5">5</Button>
-                <Button Grid.Column="6">6</Button>
-                <Button Grid.Column="7">7</Button>
-                <Button Grid.Column="8">8</Button>
-                <Button Grid.Column="9">9</Button>
+                <ListBox Name="LivingList" SelectionChanged="RulesetSelectorButton" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBoxItem>0</ListBoxItem>
+                    <ListBoxItem>1</ListBoxItem>
+                    <ListBoxItem>2</ListBoxItem>
+                    <ListBoxItem>3</ListBoxItem>
+                    <ListBoxItem>4</ListBoxItem>
+                    <ListBoxItem>5</ListBoxItem>
+                    <ListBoxItem>6</ListBoxItem>
+                    <ListBoxItem>7</ListBoxItem>
+                    <ListBoxItem>8</ListBoxItem>
+                    <ListBoxItem>9</ListBoxItem>
+                </ListBox>
             </Grid>
+
         </Grid>
 
         <Grid Name="GrowthSelector" Height="100">
@@ -113,8 +111,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                Grid Length
             </TextBlock>
+            
             
         </Grid>
         

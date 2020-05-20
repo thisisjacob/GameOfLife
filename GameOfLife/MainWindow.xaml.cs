@@ -82,7 +82,8 @@ namespace GameOfLife
 
         public void OpenSetupMenu(object sender, RoutedEventArgs e)
         {
-
+            SetupMenu setupPage = new SetupMenu();
+            setupPage.ShowDialog();
         }
 
     }
