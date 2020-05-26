@@ -27,7 +27,7 @@
                 Stop (DISABLED)
             </Button>
             <Button Name="Setup" Click="OpenSetupMenu">
-                Setup
+                Setup (NOT READY FOR USE)
             </Button>
         </Menu>
 

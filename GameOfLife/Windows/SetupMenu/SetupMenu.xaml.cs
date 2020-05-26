@@ -25,9 +25,16 @@ namespace GameOfLife
 			helper = new SetupMenuHelper();
 		}
 
-		void RulesetSelectorButton(object args, RoutedEventArgs e)
+		void InteractionRouter(object e, RoutedEventArgs args)
 		{
-
+			if (e.GetType() == typeof(ListBox))
+				RulesetSelectorButton((ListBox)e);
+		}
+		void RulesetSelectorButton(ListBox changedList)
+		{
+			var value = Int32.Parse((String)((ListBoxItem)changedList.SelectedItem).Tag);
+			helper.ChangeRuleset(changedList, value);
+			helper.RecolorBoxes(LivingList, GrowingList, DyingList);
 		}
 	}
 }
