@@ -68,18 +68,6 @@ namespace GameOfLife
             DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
         }
 
-        // does nothing meaningful for now
-        public async void Play(object sender, RoutedEventArgs e)
-        {
-            isPlaying = true;
-        }
-
-        // does nothing meaningful for now
-        public void Stop(object sender, RoutedEventArgs e)
-        {
-            isPlaying = false;
-        }
-
         public void OpenSetupMenu(object sender, RoutedEventArgs e)
         {
             SetupMenu setupPage = new SetupMenu();
