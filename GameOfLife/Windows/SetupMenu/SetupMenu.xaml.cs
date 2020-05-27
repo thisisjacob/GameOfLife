@@ -18,11 +18,13 @@ namespace GameOfLife
 	/// </summary>
 	public partial class SetupMenu : Window
 	{
+		// Holds LifeRuleset updates, holds helper functions for this window
 		SetupMenuHelper helper;
-		public SetupMenu()
+		public SetupMenu(LifeRuleset rulesetToModify)
 		{
 			InitializeComponent();
-			helper = new SetupMenuHelper();
+			helper = new SetupMenuHelper(rulesetToModify);
+			helper.RecolorBoxes(LivingList, GrowingList, DyingList);
 		}
 
 		void InteractionRouter(object e, RoutedEventArgs args)
@@ -30,11 +32,30 @@ namespace GameOfLife
 			if (e.GetType() == typeof(ListBox))
 				RulesetSelectorButton((ListBox)e);
 		}
+
+		// Fires whenever the ListBox selection in one of the three Living/Growing/Dying ListBoxes changes, called form InteractionRouter
+		// Saves the new ruleset, recolors the boxes based on what is selected
 		void RulesetSelectorButton(ListBox changedList)
 		{
-			var value = Int32.Parse((String)((ListBoxItem)changedList.SelectedItem).Tag);
-			helper.ChangeRuleset(changedList, value);
-			helper.RecolorBoxes(LivingList, GrowingList, DyingList);
+			// to prevent the following lines from firing immediately after SelectedItem of the list is set to null
+			if (changedList.SelectedItem != null) 
+			{
+				var value = Int32.Parse((String)((ListBoxItem)changedList.SelectedItem).Tag);
+				helper.ChangeRuleset(changedList, value);
+				helper.RecolorBoxes(LivingList, GrowingList, DyingList);
+				changedList.SelectedItem = null;
+			}
+		}
+
+		// For use outside of the SetupMenu. For converting helper into a LifeRuleset for the program
+		public LifeRuleset NewRuleset()
+		{
+			return new LifeRuleset(helper.selectedGrowthNumbers.ToArray(), helper.selectedLivingNumbers.ToArray(), helper.selectedDyingNumbers.ToArray());
+		}
+
+		void CloseButton(object e, RoutedEventArgs eventArgs)
+		{
+			Close();
 		}
 	}
 }

@@ -104,6 +104,6 @@
             
         </Grid>
         
-        <Button>Complete</Button>
+        <Button Click="CloseButton">Complete</Button>
     </StackPanel>
 </Window>
