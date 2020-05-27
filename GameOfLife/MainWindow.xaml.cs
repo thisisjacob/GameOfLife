@@ -70,7 +70,7 @@ namespace GameOfLife
 
         public void OpenSetupMenu(object sender, RoutedEventArgs e)
         {
-            SetupMenu setupPage = new SetupMenu(rules);
+            SetupMenu setupPage = new SetupMenu(rules, mainGame);
             setupPage.ShowDialog();
             rules = setupPage.NewRuleset();
             mainGame = new GameState(32, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);

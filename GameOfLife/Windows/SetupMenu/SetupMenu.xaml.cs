@@ -20,11 +20,16 @@ namespace GameOfLife
 	{
 		// Holds LifeRuleset updates, holds helper functions for this window
 		SetupMenuHelper helper;
-		public SetupMenu(LifeRuleset rulesetToModify)
+		int currentLength;
+
+		public SetupMenu(LifeRuleset rulesetToModify, GameState currentGame)
 		{
 			InitializeComponent();
 			helper = new SetupMenuHelper(rulesetToModify);
 			helper.RecolorBoxes(LivingList, GrowingList, DyingList);
+			currentLength = currentGame.Length();
+			EnteredLength.Text = currentLength.ToString();
+				
 		}
 
 		void InteractionRouter(object e, RoutedEventArgs args)
@@ -56,6 +61,12 @@ namespace GameOfLife
 		void CloseButton(object e, RoutedEventArgs eventArgs)
 		{
 			Close();
+		}
+
+		private void EnteredLength_KeyDown(object sender, KeyEventArgs e)
+		{
+			// if key is not a number, set handled to true
+			e.Handled = e.Key < Key.D0 || e.Key > Key.D9;
 		}
 	}
 }
