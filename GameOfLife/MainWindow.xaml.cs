@@ -75,7 +75,10 @@ namespace GameOfLife
             SetupMenu setupPage = new SetupMenu(rules, mainGame);
             setupPage.ShowDialog();
             rules = setupPage.NewRuleset();
-            mainGame = new GameState(32, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
+            int length = setupPage.NewGameStateLength();
+            mainGame = new GameState(length, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
+            // creates new board, cannot reuse old rectangles
+            DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
         }
 
     }

@@ -33,6 +33,8 @@ namespace GameOfLife
 			EnteredLength.Text = currentLength.ToString();
 		}
 
+		// Converts objects and routes them to their functions
+		// Used to make reading of the route functions easier
 		void InteractionRouter(object e, RoutedEventArgs args)
 		{
 			if (e.GetType() == typeof(ListBox))
@@ -57,6 +59,12 @@ namespace GameOfLife
 		public LifeRuleset NewRuleset()
 		{
 			return new LifeRuleset(helper.selectedGrowthNumbers.ToArray(), helper.selectedLivingNumbers.ToArray(), helper.selectedDyingNumbers.ToArray());
+		}
+
+		// Returns the new Length of the board. Should be given to a new GameState object, and the game board should be redrawn
+		public int NewGameStateLength()
+		{
+			return currentLength;
 		}
 
 		void CloseButton(object e, RoutedEventArgs eventArgs)
