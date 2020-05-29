@@ -21,15 +21,16 @@ namespace GameOfLife
 		// Holds LifeRuleset updates, holds helper functions for this window
 		SetupMenuHelper helper;
 		int currentLength;
+		string backupEnteredTextString;
 
 		public SetupMenu(LifeRuleset rulesetToModify, GameState currentGame)
 		{
 			InitializeComponent();
 			helper = new SetupMenuHelper(rulesetToModify);
 			helper.RecolorBoxes(LivingList, GrowingList, DyingList);
+			backupEnteredTextString = "";
 			currentLength = currentGame.Length();
 			EnteredLength.Text = currentLength.ToString();
-				
 		}
 
 		void InteractionRouter(object e, RoutedEventArgs args)
@@ -63,10 +64,29 @@ namespace GameOfLife
 			Close();
 		}
 
-		private void EnteredLength_KeyDown(object sender, KeyEventArgs e)
+		// Ensures only numbers can be entered into EnteredLength.Text
+		void EnteredLength_KeyDown(object sender, KeyEventArgs e)
 		{
-			// if key is not a number, set handled to true
-			e.Handled = e.Key < Key.D0 || e.Key > Key.D9;
+			// if key is not a number, set handled to true, prevents non digit input from being routed further
+			e.Handled = e.Key < Key.D0 || e.Key > Key.D9 || Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift); ;
+		}
+
+		// Updates the recorded currentLength
+		// Enforces maximum Length limit (will not allow a number higher than the limit)
+		void UpdateEnteredLength(object sender, TextChangedEventArgs e)
+		{
+			currentLength = Int32.Parse(EnteredLength.Text);
+			if (currentLength > 100) // TODO: remove hardcoding
+			{
+				EnteredLength.Text = backupEnteredTextString;
+				currentLength = Int32.Parse(EnteredLength.Text);
+			}
+			else
+			{
+				GridArea.Text = (currentLength * currentLength).ToString();
+				DimensionsArea.Text = currentLength + " by " + currentLength;
+			}
+			backupEnteredTextString = EnteredLength.Text;
 		}
 	}
 }

@@ -25,6 +25,7 @@ namespace GameOfLife
         GameState mainGame; // Object for holding the current status of the game
         LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 });
         bool isPlaying = false;
+        int lengthLimit = 100;
         public MainWindow()
         {
             InitializeComponent();
@@ -68,6 +69,7 @@ namespace GameOfLife
             DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
         }
 
+        // Opens a menu for setting the RuleSet and GameState
         public void OpenSetupMenu(object sender, RoutedEventArgs e)
         {
             SetupMenu setupPage = new SetupMenu(rules, mainGame);
