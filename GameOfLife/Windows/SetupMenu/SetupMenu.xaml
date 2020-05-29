@@ -7,109 +7,136 @@
         mc:Ignorable="d"
         Title="SetupMenu" Height="550" Width="800"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="ListBox">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="294"/>
+        </Style>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Width" Value="29"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Window.Resources>
+    
     <StackPanel>
-        <Grid Name="LivingSelector" Height="100">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+        <Border>
+            <Grid Name="LivingSelector" Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0">
                 Living
-            </TextBlock>
-            <ListBox Name="LivingList" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" Grid.Column="1">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBoxItem Tag="0">0</ListBoxItem>
-                <ListBoxItem Tag="1">1</ListBoxItem>
-                <ListBoxItem Tag="2">2</ListBoxItem>
-                <ListBoxItem Tag="3">3</ListBoxItem>
-                <ListBoxItem Tag="4">4</ListBoxItem>
-                <ListBoxItem Tag="5">5</ListBoxItem>
-                <ListBoxItem Tag="6">6</ListBoxItem>
-                <ListBoxItem Tag="7">7</ListBoxItem>
-                <ListBoxItem Tag="8">8</ListBoxItem>
-                <ListBoxItem Tag="9">9</ListBoxItem>
-            </ListBox>
+                </TextBlock>
+                <ListBox Name="LivingList" SelectionChanged="InteractionRouter" Grid.Column="1">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBoxItem Tag="0">0</ListBoxItem>
+                    <ListBoxItem Tag="1">1</ListBoxItem>
+                    <ListBoxItem Tag="2">2</ListBoxItem>
+                    <ListBoxItem Tag="3">3</ListBoxItem>
+                    <ListBoxItem Tag="4">4</ListBoxItem>
+                    <ListBoxItem Tag="5">5</ListBoxItem>
+                    <ListBoxItem Tag="6">6</ListBoxItem>
+                    <ListBoxItem Tag="7">7</ListBoxItem>
+                    <ListBoxItem Tag="8">8</ListBoxItem>
+                    <ListBoxItem Tag="9">9</ListBoxItem>
+                </ListBox>
+            </Grid>
+        </Border>
 
-        </Grid>
+        <Border>
+            <Grid Name="GrowthSelector" Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0">
+                    Growth
+                </TextBlock>
+                <ListBox Name="GrowingList" Grid.Column="1" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" >
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBoxItem Tag="0">0</ListBoxItem>
+                    <ListBoxItem Tag="1">1</ListBoxItem>
+                    <ListBoxItem Tag="2">2</ListBoxItem>
+                    <ListBoxItem Tag="3">3</ListBoxItem>
+                    <ListBoxItem Tag="4">4</ListBoxItem>
+                    <ListBoxItem Tag="5">5</ListBoxItem>
+                    <ListBoxItem Tag="6">6</ListBoxItem>
+                    <ListBoxItem Tag="7">7</ListBoxItem>
+                    <ListBoxItem Tag="8">8</ListBoxItem>
+                    <ListBoxItem Tag="9">9</ListBoxItem>
+                </ListBox>
+            </Grid>
+        </Border>
 
-        <Grid Name="GrowthSelector" Height="100">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
-                Growth
-            </TextBlock>
-            <ListBox Name="GrowingList" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" Grid.Column="1">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBoxItem Tag="0">0</ListBoxItem>
-                <ListBoxItem Tag="1">1</ListBoxItem>
-                <ListBoxItem Tag="2">2</ListBoxItem>
-                <ListBoxItem Tag="3">3</ListBoxItem>
-                <ListBoxItem Tag="4">4</ListBoxItem>
-                <ListBoxItem Tag="5">5</ListBoxItem>
-                <ListBoxItem Tag="6">6</ListBoxItem>
-                <ListBoxItem Tag="7">7</ListBoxItem>
-                <ListBoxItem Tag="8">8</ListBoxItem>
-                <ListBoxItem Tag="9">9</ListBoxItem>
-            </ListBox>
-        </Grid>
+        <Border>
+            <Grid Name="DeathSelector" Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    Death
+                </TextBlock>
+                <ListBox Name="DyingList" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" Grid.Column="1">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBoxItem Tag="0">0</ListBoxItem>
+                    <ListBoxItem Tag="1">1</ListBoxItem>
+                    <ListBoxItem Tag="2">2</ListBoxItem>
+                    <ListBoxItem Tag="3">3</ListBoxItem>
+                    <ListBoxItem Tag="4">4</ListBoxItem>
+                    <ListBoxItem Tag="5">5</ListBoxItem>
+                    <ListBoxItem Tag="6">6</ListBoxItem>
+                    <ListBoxItem Tag="7">7</ListBoxItem>
+                    <ListBoxItem Tag="8">8</ListBoxItem>
+                    <ListBoxItem Tag="9">9</ListBoxItem>
+                </ListBox>
+            </Grid>
+        </Border>
 
-        <Grid Name="DeathSelector" Height="100">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
-                Death
-            </TextBlock>
-            <ListBox Name="DyingList" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" Grid.Column="1">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBoxItem Tag="0">0</ListBoxItem>
-                <ListBoxItem Tag="1">1</ListBoxItem>
-                <ListBoxItem Tag="2">2</ListBoxItem>
-                <ListBoxItem Tag="3">3</ListBoxItem>
-                <ListBoxItem Tag="4">4</ListBoxItem>
-                <ListBoxItem Tag="5">5</ListBoxItem>
-                <ListBoxItem Tag="6">6</ListBoxItem>
-                <ListBoxItem Tag="7">7</ListBoxItem>
-                <ListBoxItem Tag="8">8</ListBoxItem>
-                <ListBoxItem Tag="9">9</ListBoxItem>
-            </ListBox>
-        </Grid>
+        <Border>
+            <Grid Name="LengthSelector" Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                    Grid Length
+                </TextBlock>
+                <TextBox Name="EnteredLength" KeyDown="EnteredLength_KeyDown" TextChanged="UpdateEnteredLength" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                </TextBox>
+                <TextBlock Name="GridArea" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                </TextBlock>
+                <TextBlock Name="DimensionsArea" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                </TextBlock>
+            </Grid>
+        </Border>
 
-        <Grid Name="LengthSelector" Height="100">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
-                Grid Length
-            </TextBlock>
-            <TextBox Name="EnteredLength" KeyDown="EnteredLength_KeyDown" TextChanged="UpdateEnteredLength" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
-            </TextBox>
-            <TextBlock Name="GridArea" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
-            </TextBlock>
-            <TextBlock Name="DimensionsArea" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
-            </TextBlock>
-            
-            
-        </Grid>
-        
-        <Button Click="CloseButton">Complete</Button>
+        <Button Click="CloseButton" Width="100" Height="50">Complete</Button>
     </StackPanel>
 </Window>

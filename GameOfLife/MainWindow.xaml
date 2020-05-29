@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="888" Width="816"
         ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style TargetType="Menu">
+            <Setter Property="Height" Value="47"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Width" Value="146"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25*"/>
@@ -27,7 +38,7 @@
                 Stop (DISABLED)
             </Button>
             <Button Name="Setup" Click="OpenSetupMenu">
-                Setup (NOT READY FOR USE)
+                Setup
             </Button>
         </Menu>
 
