@@ -5,16 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife"
         mc:Ignorable="d"
-        Title="MainWindow" Height="888" Width="816"
+        Title="Game of Life" Height="888" Width="816"
         ResizeMode="NoResize">
 
     <Window.Resources>
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
         <Style TargetType="Menu">
             <Setter Property="Height" Value="47"/>
+            <Setter Property="Background" Value="LightBlue"/>
         </Style>
         <Style TargetType="Button">
             <Setter Property="Height" Value="44"/>
             <Setter Property="Width" Value="146"/>
+            <Setter Property="Background" Value="LightGreen"/>
         </Style>
     </Window.Resources>
     

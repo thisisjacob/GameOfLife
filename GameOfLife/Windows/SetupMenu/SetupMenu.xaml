@@ -5,39 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife"
         mc:Ignorable="d"
-        Title="SetupMenu" Height="550" Width="800"
+        Title="Setup Menu" Height="500" Width="600"
         ResizeMode="NoResize">
     <Window.Resources>
+        <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
         <Style TargetType="ListBox">
             <Setter Property="Height" Value="50"/>
             <Setter Property="Width" Value="294"/>
         </Style>
         <Style TargetType="ListBoxItem">
             <Setter Property="Width" Value="29"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
         <Style TargetType="Border">
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
     </Window.Resources>
-    
+
     <StackPanel>
         <Border>
             <Grid Name="LivingSelector" Height="100">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="304"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0">
-                Living
+                Living:
                 </TextBlock>
                 <ListBox Name="LivingList" SelectionChanged="InteractionRouter" Grid.Column="1">
                     <ListBox.ItemsPanel>
@@ -62,11 +67,11 @@
         <Border>
             <Grid Name="GrowthSelector" Height="100">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="304"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0">
-                    Growth
+                    Growth:
                 </TextBlock>
                 <ListBox Name="GrowingList" Grid.Column="1" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" >
                     <ListBox.ItemsPanel>
@@ -91,13 +96,13 @@
         <Border>
             <Grid Name="DeathSelector" Height="100">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="304"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock>
-                    Death
+                <TextBlock Height="26" Width="53">
+                    Death:
                 </TextBlock>
-                <ListBox Name="DyingList" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" Grid.Column="1">
+                <ListBox Name="DyingList" SelectionChanged="InteractionRouter" HorizontalContentAlignment="Stretch" Grid.Column="1" Margin="5,25,5,25">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
@@ -126,17 +131,20 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock>
-                    Grid Length
+                    Grid Length:
                 </TextBlock>
-                <TextBox Name="EnteredLength" KeyDown="EnteredLength_KeyDown" TextChanged="UpdateEnteredLength" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                <TextBox Name="EnteredLength" KeyDown="EnteredLength_KeyDown" TextChanged="UpdateEnteredLength" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16">
                 </TextBox>
-                <TextBlock Name="GridArea" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                <TextBlock Name="GridArea" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16">
                 </TextBlock>
-                <TextBlock Name="DimensionsArea" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                <TextBlock Name="DimensionsArea" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16">
                 </TextBlock>
             </Grid>
         </Border>
 
-        <Button Click="CloseButton" Width="100" Height="50">Complete</Button>
+        <Grid VerticalAlignment="Center">
+            <Button Click="CloseButton" Width="100" Height="50" HorizontalContentAlignment="Center">Complete</Button>
+        </Grid>
+
     </StackPanel>
 </Window>

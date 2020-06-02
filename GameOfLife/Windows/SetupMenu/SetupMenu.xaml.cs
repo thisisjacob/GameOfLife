@@ -23,6 +23,9 @@ namespace GameOfLife
 		int currentLength;
 		string backupEnteredTextString;
 
+		// Constants 
+		int MAXIMUMUM_LENGTH = 100;
+
 		public SetupMenu(LifeRuleset rulesetToModify, GameState currentGame)
 		{
 			InitializeComponent();
@@ -83,8 +86,10 @@ namespace GameOfLife
 		// Enforces maximum Length limit (will not allow a number higher than the limit)
 		void UpdateEnteredLength(object sender, TextChangedEventArgs e)
 		{
-			currentLength = Int32.Parse(EnteredLength.Text);
-			if (currentLength > 100) // TODO: remove hardcoding
+			if (EnteredLength.Text.Length != 0)
+				currentLength = Int32.Parse(EnteredLength.Text);
+
+			if (currentLength > MAXIMUMUM_LENGTH)
 			{
 				EnteredLength.Text = backupEnteredTextString;
 				currentLength = Int32.Parse(EnteredLength.Text);
