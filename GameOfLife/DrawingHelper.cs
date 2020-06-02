@@ -13,8 +13,8 @@ namespace GameOfLife
         // Fills the canvas with new and equally sized rectangles representing the cells of the Game of Life
         public static void DrawGameBoard(Canvas surface, GameState givenGame)
         {
-            int canvasLength = (int)surface.ActualWidth;
-            int cellPixelLength = canvasLength / givenGame.Length();
+            var canvasLength = surface.ActualWidth;
+            var cellPixelLength = canvasLength / givenGame.Length();
 
             surface.Children.Clear(); // resets surface
             for (int i = 0; i < givenGame.Length(); i++)
@@ -26,7 +26,6 @@ namespace GameOfLife
         // Essentially just sets their fill and border colors to match their current state (alive/dead)
         public static void RedrawGameBoard(Canvas surface, GameState givenGame) 
         {
-
             for (int i = 0; i < givenGame.Length(); i++)
             {
                 for (int j = 0; j < givenGame.Length(); j++)
@@ -46,7 +45,7 @@ namespace GameOfLife
         }
 
         // Creates a new rectangle, sets its appearance based on its isAlive status, adds to to surface
-        public static void DrawCell(Canvas surface, int width, int height, int fromLeft, int fromTop, bool isAlive)
+        public static void DrawCell(Canvas surface, double width, double height, double fromLeft, double fromTop, bool isAlive)
         {
             Rectangle test = new Rectangle();
             if (isAlive == true)
@@ -94,7 +93,6 @@ namespace GameOfLife
                 (surface.Children[surfaceChildIndex] as Rectangle).Fill = Brushes.LightBlue;
             else
                 throw new NotSupportedException("Children in " + surface.Name + " is not a Rectangle item"); // item in children is not a rectangle, throw exception
-
         }
     }
 }

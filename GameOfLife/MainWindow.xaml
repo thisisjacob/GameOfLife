@@ -36,11 +36,11 @@
             <Button Name="ReverseButton" Click="ReverseStep">
                 Reverse Step
             </Button>
-            <Button Name="PlayButton">
-                Play (DISABLED)
+            <Button Name="PlayButton" Click="Play">
+                Play
             </Button>
-            <Button Name="StopButton">
-                Stop (DISABLED)
+            <Button Name="StopButton" Click="Stop">
+                Stop
             </Button>
             <Button Name="Setup" Click="OpenSetupMenu">
                 Setup
