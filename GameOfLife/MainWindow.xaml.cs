@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace GameOfLife
 {
@@ -29,7 +19,7 @@ namespace GameOfLife
         LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 });
         
         bool isPlaying = false;
-        static System.Timers.Timer playTimer;
+        Timer playTimer;
 
         // Constants
         // Default length of LifeBoard

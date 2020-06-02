@@ -57,13 +57,8 @@ namespace GameOfLife
         // Otherwise, false is returned
         public static bool DoArraysIntersect(int[] first, int[] second, int[] third)
         {
-            // at least one value is shared between the three arrays, return true
-            if (first.Intersect(second).Count() != 0 || first.Intersect(third).Count() != 0 || second.Intersect(third).Count() != 0)
-            {
-                return true;
-            }
-
-            return false; // no intersection, return false
+            // return true if at least one value shared between arrays
+            return first.Intersect(second).Count() != 0 || first.Intersect(third).Count() != 0 || second.Intersect(third).Count() != 0;
         }
 
         // Compares three int arrays

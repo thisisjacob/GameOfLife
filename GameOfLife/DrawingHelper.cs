@@ -83,13 +83,14 @@ namespace GameOfLife
         // Finds the rectangle matching the xPos and yPos given, sets its color to differentiate it from other cells 
         public static void DrawHighlightedCell(Canvas surface, int xPos, int yPos, GameState givenGame)
         {
-            int canvasLength = (int)surface.ActualWidth;
-            int cellPixelLength = canvasLength / givenGame.Length();
-            int xIndex = xPos / cellPixelLength;
-            int yIndex = yPos / cellPixelLength;
+            var canvasLength = surface.ActualWidth;
+            var cellPixelLength = canvasLength / givenGame.Length();
+            int xIndex = (int)(xPos / cellPixelLength);
+            int yIndex = (int)(yPos / cellPixelLength);
             int surfaceChildIndex = (yIndex * givenGame.Length()) + xIndex;
 
-            if (surface.Children[surfaceChildIndex] is Rectangle)
+
+            if (surfaceChildIndex < surface.Children.Count && surface.Children[surfaceChildIndex] is Rectangle)
                 (surface.Children[surfaceChildIndex] as Rectangle).Fill = Brushes.LightBlue;
             else
                 throw new NotSupportedException("Children in " + surface.Name + " is not a Rectangle item"); // item in children is not a rectangle, throw exception
