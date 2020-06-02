@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,10 +23,19 @@ namespace GameOfLife
 
     public partial class MainWindow : Window
     {
-        GameState mainGame; // Object for holding the current status of the game
+        // Object for holding the current status of the game
+        GameState mainGame; 
+        // initialized with default Game of Life rules
         LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 });
         bool isPlaying = false;
-        int lengthLimit = 100;
+        private static System.Timers.Timer playTimer;
+
+        // Constants
+        // Default length of LifeBoard
+        int DEFAULT_LENGTH = 32;
+        // Default time of counter 
+        int COUNTER_TIME = 1000;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,8 +45,13 @@ namespace GameOfLife
         // When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
         void InitializeProgram(object sender, EventArgs e)
         {
-            mainGame = new GameState(32, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
+            mainGame = new GameState(DEFAULT_LENGTH, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
+
+            playTimer = new System.Timers.Timer(COUNTER_TIME);
+			playTimer.Elapsed += TimerEvent;
+            playTimer.AutoReset = true;
+            playTimer.Enabled = true;
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state
@@ -81,5 +96,31 @@ namespace GameOfLife
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
         }
 
+        // Make LifeBoard redraw with a new GameStep every COUNTER_TIME time
+        public void Play(object sender, RoutedEventArgs e)
+		{
+            isPlaying = true;
+
+        }
+
+        // Stops LifeBoard from automatically updating
+        public void Stop(object sender, RoutedEventArgs e)
+		{
+            isPlaying = false;
+		}
+
+        // Fires every COUNTER_TIME
+        // if enabled by Play, redraws the LifeBoard with a GameStep for mainGame
+        public void TimerEvent(object source, ElapsedEventArgs e)
+		{
+            this.Dispatcher.Invoke(() =>
+            {
+                if (isPlaying)
+                {
+                    mainGame.GameStep();
+                    DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
+                }
+            });
+        }
     }
 }
