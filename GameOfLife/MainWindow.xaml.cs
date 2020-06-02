@@ -57,36 +57,56 @@ namespace GameOfLife
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state
         void AdvanceStep(object sender, RoutedEventArgs e)
         {
-            mainGame.GameStep();
-            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            // prevents modification of board while playing
+            if (!isPlaying)
+			{
+                mainGame.GameStep();
+                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            }
         }
 
         // When fired, move mainGame back one step in history, redraw game board
         void ReverseStep(object sender, RoutedEventArgs e)
         {
-            mainGame.GoBackStep();
-            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            // prevents modification of board while playing
+            if (!isPlaying)
+			{
+                mainGame.GoBackStep();
+                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            }
         }
 
         // When fired, finds the position of the cursor, redraws the canvas and then highlights the cell the cursor is over
         void CanvasMouseMovement(object sender, RoutedEventArgs e)
         {
-            Point position = Mouse.GetPosition(sender as Canvas);
-            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
-            DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, mainGame);
+            // prevents needless redrawing while the game is set to play
+            if (!isPlaying)
+			{
+                Point position = Mouse.GetPosition(sender as Canvas);
+                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+                DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, mainGame);
+            }
         }
 
         // When fired, finds the position of the cursor, flips the status of the cell (dead/alive or false/true) and then redraws the canvas
-        public void CanvasCellClicked(object sender, RoutedEventArgs e)
+        void CanvasCellClicked(object sender, RoutedEventArgs e)
         {
-            Point position = Mouse.GetPosition(LifeBoard);
-            mainGame.SwitchStatus((int)position.X, (int)position.Y);
-            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            // prevents modification of game while game is set to play
+            if (!isPlaying)
+			{
+                Point position = Mouse.GetPosition(LifeBoard);
+                mainGame.SwitchStatus((int)position.X, (int)position.Y);
+                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            }
         }
 
         // Opens a menu for setting the RuleSet and GameState
-        public void OpenSetupMenu(object sender, RoutedEventArgs e)
+        void OpenSetupMenu(object sender, RoutedEventArgs e)
         {
+            // stops redrawing while SetupMenu is open
+            isPlaying = false; 
+            playTimer.Stop();
+
             SetupMenu setupPage = new SetupMenu(rules, mainGame);
             setupPage.ShowDialog();
             rules = setupPage.NewRuleset();
@@ -94,24 +114,27 @@ namespace GameOfLife
             mainGame = new GameState(length, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
             // creates new board, cannot reuse old rectangles
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
+
+            // continues redrawing
+            playTimer.Start();
         }
 
         // Make LifeBoard redraw with a new GameStep every COUNTER_TIME time
-        public void Play(object sender, RoutedEventArgs e)
+        void Play(object sender, RoutedEventArgs e)
 		{
             isPlaying = true;
 
         }
 
         // Stops LifeBoard from automatically updating
-        public void Stop(object sender, RoutedEventArgs e)
+        void Stop(object sender, RoutedEventArgs e)
 		{
             isPlaying = false;
 		}
 
         // Fires every COUNTER_TIME
         // if enabled by Play, redraws the LifeBoard with a GameStep for mainGame
-        public void TimerEvent(object source, ElapsedEventArgs e)
+        void TimerEvent(object source, ElapsedEventArgs e)
 		{
             this.Dispatcher.Invoke(() =>
             {
