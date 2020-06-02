@@ -27,14 +27,15 @@ namespace GameOfLife
         GameState mainGame; 
         // initialized with default Game of Life rules
         LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 });
+        
         bool isPlaying = false;
-        private static System.Timers.Timer playTimer;
+        static System.Timers.Timer playTimer;
 
         // Constants
         // Default length of LifeBoard
-        int DEFAULT_LENGTH = 32;
+        const int DEFAULT_LENGTH = 32;
         // Default time of counter 
-        int COUNTER_TIME = 1000;
+        const int COUNTER_TIME = 1000;
 
         public MainWindow()
         {
@@ -136,7 +137,7 @@ namespace GameOfLife
         // if enabled by Play, redraws the LifeBoard with a GameStep for mainGame
         void TimerEvent(object source, ElapsedEventArgs e)
 		{
-            this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
             {
                 if (isPlaying)
                 {
