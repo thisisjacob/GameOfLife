@@ -85,8 +85,13 @@ namespace GameOfLife
             }
         }
 
+        void CanvasMouseLeftItem(object sender, MouseEventArgs e)
+		{
+            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+		}
+
         // When fired, finds the position of the cursor, flips the status of the cell (dead/alive or false/true) and then redraws the canvas
-        void CanvasCellClicked(object sender, RoutedEventArgs e)
+        void CanvasCellClicked(object sender, MouseEventArgs e)
         {
             // prevents modification of game while game is set to play
             if (!isPlaying)
@@ -120,7 +125,6 @@ namespace GameOfLife
         void Play(object sender, RoutedEventArgs e)
 		{
             isPlaying = true;
-
         }
 
         // Stops LifeBoard from automatically updating
