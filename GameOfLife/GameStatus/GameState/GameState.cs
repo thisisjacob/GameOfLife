@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -15,6 +16,8 @@ namespace GameOfLife
         bool[,] lifeCells;
         readonly Stack<bool[,]> lifeCellsHistory;
         readonly LifeRuleset currentRules;
+        int xIndexOfLastModifiedCell;
+        int yIndexOfLastModifiedCell;
 
         // Initializes GameState with a length of the given gameWidth
         // Integer must be greater than 0, an ArgumentOutOfRangeException is thrown if it is less than 0
@@ -31,6 +34,8 @@ namespace GameOfLife
             cellLengthPixels = pixelsWidth;
             lifeCells = new bool[gameWidth, gameWidth];
             currentRules = givenRules;
+            xIndexOfLastModifiedCell = -1;
+            yIndexOfLastModifiedCell = -1;
         }
 
         // Returns the length of the both sides of the game board as an int
@@ -71,15 +76,21 @@ namespace GameOfLife
 
         // If selected cell (int x, int y) is true, set the selected cell to false
         // Otherwise, set the selected cell to true
-        public void SwitchStatus(int j, int i)
+        public void SwitchStatus(int j, int i, bool isDragged)
         {
             int xCell = j / (cellLengthPixels / cellLengthNum);
             int yCell = i / (cellLengthPixels / cellLengthNum);
 
-            if (lifeCells[yCell, xCell] == true)
-                lifeCells[yCell, xCell] = false;
-            else
-                lifeCells[yCell, xCell] = true;
+            if ((!isDragged || xCell != xIndexOfLastModifiedCell || yCell != yIndexOfLastModifiedCell) &&
+                BoundaryCheck(xCell, yCell, 0, 0))
+			{
+                if (lifeCells[yCell, xCell] == true)
+                    lifeCells[yCell, xCell] = false;
+                else
+                    lifeCells[yCell, xCell] = true;
+                xIndexOfLastModifiedCell = xCell;
+                yIndexOfLastModifiedCell = yCell;
+            }
         }
 
         // Checks the status of nearby cells

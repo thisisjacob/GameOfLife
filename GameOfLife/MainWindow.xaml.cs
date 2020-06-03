@@ -68,12 +68,18 @@ namespace GameOfLife
         }
 
         // When fired, finds the position of the cursor, redraws the canvas and then highlights the cell the cursor is over
-        void CanvasMouseMovement(object sender, RoutedEventArgs e)
+        // If user was clicking and dragging, then cells will be modified as they move the mouse
+        void CanvasMouseMovement(object sender, MouseEventArgs e)
         {
             // prevents needless redrawing while the game is set to play
             if (!isPlaying)
 			{
                 Point position = Mouse.GetPosition(sender as Canvas);
+                // if user clicks and drags, then draw cells as they move the mouse
+                if (e.LeftButton == MouseButtonState.Pressed)
+				{
+                    mainGame.SwitchStatus((int)position.X, (int)position.Y, true);
+				}
                 DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
                 DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, mainGame);
             }
@@ -86,7 +92,7 @@ namespace GameOfLife
             if (!isPlaying)
 			{
                 Point position = Mouse.GetPosition(LifeBoard);
-                mainGame.SwitchStatus((int)position.X, (int)position.Y);
+                mainGame.SwitchStatus((int)position.X, (int)position.Y, false);
                 DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
             }
         }
