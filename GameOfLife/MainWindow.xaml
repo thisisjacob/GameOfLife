@@ -30,16 +30,16 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <Button Name="AdvanceButton" Click="AdvanceStep">
+            <Button Name="AdvanceButton" Click="AdvanceStep" MouseLeave="ButtonLeave">
                 Advance Step
             </Button>
-            <Button Name="ReverseButton" Click="ReverseStep">
+            <Button Name="ReverseButton" Click="ReverseStep" MouseLeave="ButtonLeave">
                 Reverse Step
             </Button>
-            <Button Name="PlayButton" Click="Play">
+            <Button Name="PlayButton" Click="Play" MouseLeave="ButtonLeave">
                 Play
             </Button>
-            <Button Name="StopButton" Click="Stop">
+            <Button Name="StopButton" Click="Stop" MouseLeave="ButtonLeave">
                 Stop
             </Button>
             <Button Name="Setup" Click="OpenSetupMenu">
@@ -47,7 +47,9 @@
             </Button>
         </Menu>
 
-        <Canvas Grid.Row="1" Height="800" Width="800" Name="LifeBoard" MouseMove="CanvasMouseMovement" MouseLeave="CanvasMouseLeftItem" MouseLeftButtonUp="CanvasCellClicked">
+        <Canvas Grid.Row="1" Height="800" Width="800" Name="LifeBoard" 
+                MouseMove="CanvasMouseMovement" MouseLeave="CanvasMouseLeftItem" MouseLeftButtonUp="CanvasCellClicked"
+                MouseEnter="CanvasMouseMovement">
             <Canvas.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </Canvas.Background>

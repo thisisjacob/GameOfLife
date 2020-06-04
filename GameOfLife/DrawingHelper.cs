@@ -83,17 +83,20 @@ namespace GameOfLife
         // Finds the rectangle matching the xPos and yPos given, sets its color to differentiate it from other cells 
         public static void DrawHighlightedCell(Canvas surface, int xPos, int yPos, GameState givenGame)
         {
-            var canvasLength = surface.ActualWidth;
-            var cellPixelLength = canvasLength / givenGame.Length();
-            int xIndex = (int)(xPos / cellPixelLength);
-            int yIndex = (int)(yPos / cellPixelLength);
-            int surfaceChildIndex = (yIndex * givenGame.Length()) + xIndex;
+            if (xPos >= 0 && yPos >= 0 && xPos < surface.ActualWidth && yPos < surface.ActualWidth)
+			{
+                var canvasLength = surface.ActualWidth;
+                var cellPixelLength = canvasLength / givenGame.Length();
+                int xIndex = (int)(xPos / cellPixelLength);
+                int yIndex = (int)(yPos / cellPixelLength);
+                int surfaceChildIndex = (yIndex * givenGame.Length()) + xIndex;
 
 
-            if (surfaceChildIndex < surface.Children.Count && surface.Children[surfaceChildIndex] is Rectangle)
-                (surface.Children[surfaceChildIndex] as Rectangle).Fill = Brushes.LightBlue;
-            else
-                throw new NotSupportedException("Children in " + surface.Name + " is not a Rectangle item"); // item in children is not a rectangle, throw exception
+                if (surfaceChildIndex < surface.Children.Count && surface.Children[surfaceChildIndex] is Rectangle)
+                    (surface.Children[surfaceChildIndex] as Rectangle).Fill = Brushes.LightBlue;
+                else
+                    throw new NotSupportedException("Children in " + surface.Name + " is not a Rectangle item"); // item in children is not a rectangle, throw exception
+            }
         }
     }
 }

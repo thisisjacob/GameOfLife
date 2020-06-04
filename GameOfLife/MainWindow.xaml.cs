@@ -67,6 +67,16 @@ namespace GameOfLife
             }
         }
 
+        // Captures and releases capture of mouse for LifeBoard
+        void ButtonLeave(object sender, RoutedEventArgs e)
+		{
+            if (LifeBoard.IsEnabled)
+			{
+                LifeBoard.CaptureMouse();
+                LifeBoard.ReleaseMouseCapture();
+            }
+		}
+
         // When fired, finds the position of the cursor, redraws the canvas and then highlights the cell the cursor is over
         // If user was clicking and dragging, then cells will be modified as they move the mouse
         void CanvasMouseMovement(object sender, MouseEventArgs e)
@@ -85,6 +95,8 @@ namespace GameOfLife
             }
         }
 
+        // Redraws LifeBoard when mouse exits LifeBoard.
+        // Has the effect of removing cell selector
         void CanvasMouseLeftItem(object sender, MouseEventArgs e)
 		{
             DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
