@@ -43,9 +43,9 @@ namespace GameOfLife.Windows.SetupMenu
 		// Recolors the three given ListBox subitems based on the Brush colors defined at the header
 		public void RecolorBoxes(ListBox living, ListBox growing, ListBox dying)
 		{
-			if (living.Items.Count != 10 || growing.Items.Count != 10 || dying.Items.Count != 10)
+			if (living.Items.Count != 9 || growing.Items.Count != 9 || dying.Items.Count != 9)
 				throw new ArgumentException("One of the given ListBox does not have 10 items");
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 9; i++)
 			{
 				if (selectedLivingNumbers.Contains(i))
 					((ListBoxItem)living.Items[i]).Background = selectedColor;
