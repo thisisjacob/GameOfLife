@@ -39,7 +39,7 @@ namespace GameOfLife
             mainGame = new GameState(DEFAULT_LENGTH, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
 
-            playTimer = new System.Timers.Timer(COUNTER_TIME);
+            playTimer = new Timer(COUNTER_TIME);
 			playTimer.Elapsed += TimerEvent;
             playTimer.AutoReset = true;
             playTimer.Enabled = true;
@@ -157,6 +157,22 @@ namespace GameOfLife
                     DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
                 }
             });
+        }
+
+        void ChangeTimerSpeed(object sender, RoutedEventArgs e)
+		{
+            if (playTimer != null)
+			{
+                var givenObject = (Slider)sender;
+                var isPlayingBeforeCall = isPlaying;
+                isPlaying = false;
+                playTimer.Close();
+                playTimer = new Timer(givenObject.Value);
+                playTimer.Elapsed += TimerEvent;
+                playTimer.AutoReset = true;
+                playTimer.Enabled = true;
+                isPlaying = isPlayingBeforeCall;
+            }
         }
     }
 }
