@@ -57,11 +57,11 @@
         </Canvas>
 
         <ToolBar Grid.Row="2" Margin="0,16,0,0">
-            <Slider Name="SpeedSlider" IsSnapToTickEnabled="True" Value="1000" Minimum="200" Maximum="5000" TickFrequency="400" TickPlacement="Both" Width="140"
+            <Slider Name="SpeedSlider" IsSnapToTickEnabled="True" Value="1000" Minimum="200" Maximum="5000" TickFrequency="400" TickPlacement="Both" 
+                    Width="140" VerticalAlignment="Center"
                     ValueChanged="ChangeTimerSpeed">
             </Slider>
             <TextBlock Text="{Binding Path=Value, ElementName=SpeedSlider}" VerticalAlignment="Center">
-                
             </TextBlock>
         </ToolBar>
 

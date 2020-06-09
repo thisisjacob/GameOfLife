@@ -159,6 +159,7 @@ namespace GameOfLife
             });
         }
 
+        // stops playing, creates a new timer, sets it to the value of sender (assumed to be a slider)
         void ChangeTimerSpeed(object sender, RoutedEventArgs e)
 		{
             if (playTimer != null)
