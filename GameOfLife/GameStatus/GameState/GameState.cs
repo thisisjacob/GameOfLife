@@ -78,8 +78,8 @@ namespace GameOfLife
         // Otherwise, set the selected cell to true
         public void SwitchStatus(int j, int i, bool isDragged)
         {
-            int xCell = j / (cellLengthPixels / cellLengthNum);
-            int yCell = i / (cellLengthPixels / cellLengthNum);
+            var xCell = (int)(j / ((double)cellLengthPixels / cellLengthNum));
+            var yCell = (int)(i / ((double)cellLengthPixels / cellLengthNum));
 
             if ((!isDragged || xCell != xIndexOfLastModifiedCell || yCell != yIndexOfLastModifiedCell) &&
                 BoundaryCheck(xCell, yCell, 0, 0))
