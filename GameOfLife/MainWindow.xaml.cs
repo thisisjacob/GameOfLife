@@ -30,11 +30,21 @@ namespace GameOfLife
         public MainWindow()
         {
             InitializeComponent();
-            LifeBoard.Loaded += InitializeProgram; // initializes board
+            LifeBoard.Loaded += InitializeProgram;
+			Closed += MainWindow_Closed; 
         }
 
-        // When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
-        void InitializeProgram(object sender, EventArgs e)
+        // Misc. actions that must be done when user closes the program
+        private void MainWindow_Closed(object sender, EventArgs e)
+		{
+			if (playTimer != null)
+			{
+                playTimer.Dispose();
+			}
+		}
+
+		// When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
+		void InitializeProgram(object sender, EventArgs e)
         {
             mainGame = new GameState(DEFAULT_LENGTH, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
