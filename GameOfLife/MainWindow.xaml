@@ -13,13 +13,12 @@
             <Setter Property="Background" Value="LightBlue"/>
         </Style>
         <Style TargetType="Menu">
-            <Setter Property="Height" Value="50"/>
             <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Height" Value="44"/>
-            <Setter Property="Width" Value="146"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="MinWidth" Value="100"/>
             <Setter Property="Background" Value="LightGreen"/>
         </Style>
     </Window.Resources>
@@ -32,21 +31,23 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <Button Name="AdvanceButton" Click="AdvanceStep" MouseLeave="ButtonLeave">
-                Advance Step
-            </Button>
-            <Button Name="ReverseButton" Click="ReverseStep" MouseLeave="ButtonLeave">
-                Reverse Step
-            </Button>
-            <Button Name="PlayButton" Click="Play" MouseLeave="ButtonLeave">
-                Play
-            </Button>
-            <Button Name="StopButton" Click="Stop" MouseLeave="ButtonLeave">
-                Stop
-            </Button>
-            <Button Name="Setup" Click="OpenSetupMenu">
-                Setup
-            </Button>
+            <UniformGrid Rows="1" Width="800">
+                <Button Name="AdvanceButton" Click="AdvanceStep" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="0">
+                    Advance Step
+                </Button>
+                <Button Name="ReverseButton" Click="ReverseStep" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="1">
+                    Reverse Step
+                </Button>
+                <Button Name="PlayButton" Click="Play" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="2">
+                    Play
+                </Button>
+                <Button Name="StopButton" Click="Stop" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="3">
+                    Stop
+                </Button>
+                <Button Name="Setup" Click="OpenSetupMenu" Grid.Row="0" Grid.Column="4">
+                    Setup
+                </Button>
+            </UniformGrid>
         </Menu>
 
         <Canvas Name="LifeBoard" Grid.Row="1" Width="700" Height="700"
@@ -57,7 +58,7 @@
             </Canvas.Background>
         </Canvas>
 
-        <Menu Grid.Row="2" Margin="0,16,0,0">
+        <Menu Grid.Row="2" Grid.RowSpan="2">
             <Slider Name="SpeedSlider" IsSnapToTickEnabled="True" Value="1000" Minimum="200" Maximum="5000" TickFrequency="100" TickPlacement="None" 
                     Width="200" VerticalAlignment="Center"
                     ValueChanged="ChangeTimerSpeed">
