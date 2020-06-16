@@ -59,6 +59,11 @@
         </Canvas>
 
         <Menu Grid.Row="2" Grid.RowSpan="2">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
             <Slider Name="SpeedSlider" IsSnapToTickEnabled="True" Value="1000" Minimum="200" Maximum="5000" TickFrequency="100" TickPlacement="None" 
                     Width="200" VerticalAlignment="Center"
                     ValueChanged="ChangeTimerSpeed">
