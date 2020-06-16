@@ -66,7 +66,7 @@
             </Menu.ItemsPanel>
             <Slider Name="SpeedSlider" IsSnapToTickEnabled="True" Value="1000" Minimum="200" Maximum="5000" TickFrequency="100" TickPlacement="None" 
                     Width="200" VerticalAlignment="Center"
-                    ValueChanged="ChangeTimerSpeed">
+                    ValueChanged="ChangeTimerSpeed" MouseLeave="ButtonLeave">
             </Slider>
             <TextBlock Text="{Binding Path=Value, ElementName=SpeedSlider, StringFormat={}{0} milliseconds per turn}" VerticalAlignment="Center">
             </TextBlock>
