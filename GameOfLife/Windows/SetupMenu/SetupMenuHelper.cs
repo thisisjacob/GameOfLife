@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -12,8 +10,8 @@ namespace GameOfLife.Windows.SetupMenu
 		public List<int> selectedLivingNumbers;
 		public List<int> selectedGrowthNumbers;
 		public List<int> selectedDyingNumbers;
-		Brush selectedColor = Brushes.Green;
-		Brush notSelectedColor = Brushes.Blue;
+		readonly Brush selectedColor = Brushes.Green;
+		readonly Brush notSelectedColor = Brushes.Red;
 
 		public SetupMenuHelper(LifeRuleset rulesetToModify)
 		{

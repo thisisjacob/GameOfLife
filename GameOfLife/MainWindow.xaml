@@ -31,7 +31,7 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <UniformGrid Rows="1" Width="800">
+            <UniformGrid Rows="1" Width="785">
                 <Button Name="AdvanceButton" Click="AdvanceStep" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="0">
                     Advance Step
                 </Button>

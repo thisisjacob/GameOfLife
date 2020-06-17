@@ -132,9 +132,11 @@
                 </TextBlock>
                 <TextBox Name="EnteredLength" KeyDown="EnteredLength_KeyDown" TextChanged="UpdateEnteredLength" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16">
                 </TextBox>
-                <TextBlock Name="GridArea" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16">
+                <TextBlock Name="GridArea" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                           Text="{Binding Path=Text, ElementName=EnteredLength, StringFormat={}{0} by {0}}">
                 </TextBlock>
-                <TextBlock Name="DimensionsArea" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16">
+                <TextBlock Name="DimensionsArea" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                           Text="{Binding Path=Text, ElementName=EnteredLength, StringFormat={}{0} by {0}}">
                 </TextBlock>
             </Grid>
         </Border>
