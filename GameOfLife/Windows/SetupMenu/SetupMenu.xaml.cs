@@ -80,17 +80,12 @@ namespace GameOfLife
 		void UpdateEnteredLength(object sender, TextChangedEventArgs e)
 		{
 			if (EnteredLength.Text.Length != 0)
-				currentLength = Int32.Parse(EnteredLength.Text);
+				currentLength = int.Parse(EnteredLength.Text);
 
 			if (currentLength > MAXIMUMUM_LENGTH)
 			{
 				EnteredLength.Text = backupEnteredTextString;
-				currentLength = Int32.Parse(EnteredLength.Text);
-			}
-			else
-			{
-				GridArea.Text = (currentLength * currentLength).ToString();
-				DimensionsArea.Text = currentLength + " by " + currentLength;
+				currentLength = int.Parse(EnteredLength.Text);
 			}
 			backupEnteredTextString = EnteredLength.Text;
 		}
