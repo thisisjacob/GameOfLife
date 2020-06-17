@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using GameOfLife.Windows.SetupMenu;
 
 namespace GameOfLife
@@ -87,17 +80,12 @@ namespace GameOfLife
 		void UpdateEnteredLength(object sender, TextChangedEventArgs e)
 		{
 			if (EnteredLength.Text.Length != 0)
-				currentLength = Int32.Parse(EnteredLength.Text);
+				currentLength = int.Parse(EnteredLength.Text);
 
 			if (currentLength > MAXIMUMUM_LENGTH)
 			{
 				EnteredLength.Text = backupEnteredTextString;
-				currentLength = Int32.Parse(EnteredLength.Text);
-			}
-			else
-			{
-				GridArea.Text = (currentLength * currentLength).ToString();
-				DimensionsArea.Text = currentLength + " by " + currentLength;
+				currentLength = int.Parse(EnteredLength.Text);
 			}
 			backupEnteredTextString = EnteredLength.Text;
 		}

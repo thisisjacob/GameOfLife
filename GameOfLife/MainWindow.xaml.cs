@@ -30,16 +30,26 @@ namespace GameOfLife
         public MainWindow()
         {
             InitializeComponent();
-            LifeBoard.Loaded += InitializeProgram; // initializes board
+            LifeBoard.Loaded += InitializeProgram;
+			Closed += MainWindow_Closed; 
         }
 
-        // When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
-        void InitializeProgram(object sender, EventArgs e)
+        // Misc. actions that must be done when user closes the program
+        private void MainWindow_Closed(object sender, EventArgs e)
+		{
+			if (playTimer != null)
+			{
+                playTimer.Dispose();
+			}
+		}
+
+		// When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
+		void InitializeProgram(object sender, EventArgs e)
         {
             mainGame = new GameState(DEFAULT_LENGTH, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
             DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
 
-            playTimer = new System.Timers.Timer(COUNTER_TIME);
+            playTimer = new Timer(COUNTER_TIME);
 			playTimer.Elapsed += TimerEvent;
             playTimer.AutoReset = true;
             playTimer.Enabled = true;
@@ -157,6 +167,23 @@ namespace GameOfLife
                     DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
                 }
             });
+        }
+
+        // stops playing, creates a new timer, sets it to the value of sender (assumed to be a slider)
+        void ChangeTimerSpeed(object sender, RoutedEventArgs e)
+		{
+            if (playTimer != null)
+			{
+                var givenObject = (Slider)sender;
+                var isPlayingBeforeCall = isPlaying;
+                isPlaying = false;
+                playTimer.Close();
+                playTimer = new Timer(givenObject.Value);
+                playTimer.Elapsed += TimerEvent;
+                playTimer.AutoReset = true;
+                playTimer.Enabled = true;
+                isPlaying = isPlayingBeforeCall;
+            }
         }
     }
 }

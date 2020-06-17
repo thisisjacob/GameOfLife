@@ -9,50 +9,68 @@
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <Style TargetType="Window">
+        <Style TargetType="Grid">
             <Setter Property="Background" Value="LightBlue"/>
         </Style>
         <Style TargetType="Menu">
-            <Setter Property="Height" Value="47"/>
-            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Height" Value="44"/>
-            <Setter Property="Width" Value="146"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="MinWidth" Value="100"/>
             <Setter Property="Background" Value="LightGreen"/>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="409*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="753*"/>
+            <RowDefinition Height="69*"/>
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <Button Name="AdvanceButton" Click="AdvanceStep" MouseLeave="ButtonLeave">
-                Advance Step
-            </Button>
-            <Button Name="ReverseButton" Click="ReverseStep" MouseLeave="ButtonLeave">
-                Reverse Step
-            </Button>
-            <Button Name="PlayButton" Click="Play" MouseLeave="ButtonLeave">
-                Play
-            </Button>
-            <Button Name="StopButton" Click="Stop" MouseLeave="ButtonLeave">
-                Stop
-            </Button>
-            <Button Name="Setup" Click="OpenSetupMenu">
-                Setup
-            </Button>
+            <UniformGrid Rows="1" Width="785">
+                <Button Name="AdvanceButton" Click="AdvanceStep" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="0">
+                    Advance Step
+                </Button>
+                <Button Name="ReverseButton" Click="ReverseStep" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="1">
+                    Reverse Step
+                </Button>
+                <Button Name="PlayButton" Click="Play" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="2">
+                    Play
+                </Button>
+                <Button Name="StopButton" Click="Stop" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="3">
+                    Stop
+                </Button>
+                <Button Name="Setup" Click="OpenSetupMenu" Grid.Row="0" Grid.Column="4">
+                    Setup
+                </Button>
+            </UniformGrid>
         </Menu>
 
-        <Canvas Grid.Row="1" Height="800" Width="800" Name="LifeBoard" 
+        <Canvas Name="LifeBoard" Grid.Row="1" Width="700" Height="700"
                 MouseMove="CanvasMouseMovement" MouseLeave="CanvasMouseLeftItem" MouseLeftButtonUp="CanvasCellClicked"
                 MouseEnter="CanvasMouseMovement">
             <Canvas.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </Canvas.Background>
         </Canvas>
+
+        <Menu Grid.Row="2" Grid.RowSpan="2">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <Slider Name="SpeedSlider" IsSnapToTickEnabled="True" Value="1000" Minimum="200" Maximum="5000" TickFrequency="100" TickPlacement="None" 
+                    Width="200" VerticalAlignment="Center"
+                    ValueChanged="ChangeTimerSpeed" MouseLeave="ButtonLeave">
+            </Slider>
+            <TextBlock Text="{Binding Path=Value, ElementName=SpeedSlider, StringFormat={}{0} milliseconds per turn}" VerticalAlignment="Center">
+            </TextBlock>
+        </Menu>
+
     </Grid>
 </Window>
