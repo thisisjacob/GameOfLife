@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Collections;
 
 namespace GameOfLife
 {
@@ -81,6 +82,5 @@ namespace GameOfLife
             // if there are no elements in digitsLeft remaining, return false. otherwise, there are missing digits, so return true
             return (digitsLeft.Count != 0);
         }
-
     }
 }

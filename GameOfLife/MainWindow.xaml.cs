@@ -3,7 +3,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using GameOfLife.GameStatus.LifeRulesetFiles;
 
 namespace GameOfLife
 {
@@ -16,7 +16,7 @@ namespace GameOfLife
         // Object for holding the current status of the game
         GameState mainGame; 
         // initialized with default Game of Life rules
-        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 });
+        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 }); // TODO: 9 SHOULD NOT BE NEEDED, REQURIED OR VALID. FIX THIS ISSUE BEFORE NEXT RELEASE
         
         bool isPlaying = false;
         Timer playTimer;
@@ -31,7 +31,9 @@ namespace GameOfLife
         {
             InitializeComponent();
             LifeBoard.Loaded += InitializeProgram;
-			Closed += MainWindow_Closed; 
+			Closed += MainWindow_Closed;
+
+            new LifeRulesetFileFormat(rules);
         }
 
         // Misc. actions that must be done when user closes the program
