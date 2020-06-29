@@ -1,21 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-
+using System.Text.RegularExpressions;
+// TODO: FINISH CREATING DATA VALIDATION FUNCTION
+// TODO: CREATE FUNCTIONS TO RETURN DATA OR A LifeRuleset
+// TODO: maybe use List<char> instead of List<string> for lines?
+// TODO: TEST VALIDATION FUNCTION ONCE COMPLETE WITH DIFFERENT EXAMPLES OF NUMBER_OF_LINES LENGTH DATA
 namespace GameOfLife.GameStatus.LifeRulesetFiles
 {
 	// DATA FORMAT
 	// The data is read as a series of strings, with a total length of 13 lines
 	// It begins with the char 'G' (GrowthArray), followed by a total of 0-9 numbers in the range of 0-8
-	// Then it is followed by the char 'L' (LivingArray), following the same number rules
+	// Then it is followed by the string 'L' (LivingArray), following the same number rules
 	// Then 'D' (DyingArray), same rule
 	// Then 'E' to denote the end of file
 	// The numbers are not allowed to repeat
 	public class LifeRulesetFileFormat
 	{
 		// defined number of lines there must be to be valid in this format
-		// it is the total possible number of unique digits (0-8) + number of needed char tags ('G', 'L', 'D', 'E') (4) 
+		// it is the total possible number of unique digits (0-8) + number of needed string tags ("G", "L", "D", "E") (4) 
 		const int NUMBER_OF_LINES = 13;
+		const string GROWTH_START = "G";
+		const string LIVING_START = "L";
+		const string DYING_START = "D";
+		const string END = "E";
+		Regex ORDER_CHECK_REGEX = new Regex(@"G(\d*)L(\d*)D(\d*)E");
 
 		// true as long as conversion to or from file is valid
 		bool IsValid; 
@@ -73,27 +83,20 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 
 		public bool ValidateFileFormat(List<string> data)
 		{
+			HashSet<int> numbers = new HashSet<int>();
 			if (data.Count != NUMBER_OF_LINES)
-			{
 				return false;
-			}
+			// check order according to format specification
+			else if (ORDER_CHECK_REGEX.IsMatch(data.ToString()))
+				return false;
 			int i = 0;
-			if (data[i] != "G")
+			foreach (string item in data)
 			{
-				return false;
-			}
-			else
-			{
-				while (data[i] != "L")
+				if (Char.IsDigit((char)item))
 				{
-					i++;
+					numbers.Append((int)item);
 				}
 			}
-			if (data[i] != "")
-			{
-
-			}
-
 			return false;
 		}
 	}
