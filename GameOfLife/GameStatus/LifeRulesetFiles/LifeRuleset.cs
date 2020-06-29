@@ -67,8 +67,8 @@ namespace GameOfLife
         // If there are no missing digits return false
         public static bool AreThereAnyMissingDigits(int[] first, int[] second, int[] third)
         {
-            List<int> digits = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            List<int> digitsLeft = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            List<int> digits = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+            List<int> digitsLeft = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
             // if an element of digitsLeft is in any of the parameter int arrays, remove that element from digitsLeft
             foreach (int element in digits)

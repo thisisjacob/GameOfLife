@@ -14,6 +14,7 @@ namespace GameOfLife.Windows.NotificationWindows
 {
 	/// <summary>
 	/// Interaction logic for FileReadError.xaml
+	/// This is used for displaying information when there is an error while reading from file
 	/// </summary>
 	public partial class FileReadError : Window
 	{

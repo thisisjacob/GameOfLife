@@ -14,6 +14,7 @@ namespace GameOfLife.Windows.NotificationWindows
 {
 	/// <summary>
 	/// Interaction logic for FileWriteError.xaml
+	/// This is used for displaying information when there is an error writing to file
 	/// </summary>
 	public partial class FileWriteError : Window
 	{

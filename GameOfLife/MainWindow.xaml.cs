@@ -16,7 +16,7 @@ namespace GameOfLife
         // Object for holding the current status of the game
         GameState mainGame; 
         // initialized with default Game of Life rules
-        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 }); // TODO: 9 SHOULD NOT BE NEEDED, REQURIED OR VALID. FIX THIS ISSUE BEFORE NEXT RELEASE
+        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8 }); // TODO: 9 SHOULD NOT BE NEEDED, REQURIED OR VALID. FIX THIS ISSUE BEFORE NEXT RELEASE
         
         bool isPlaying = false;
         Timer playTimer;
