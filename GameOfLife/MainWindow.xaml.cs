@@ -16,7 +16,7 @@ namespace GameOfLife
         // Object for holding the current status of the game
         GameState mainGame; 
         // initialized with default Game of Life rules
-        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8 }); // TODO: 9 SHOULD NOT BE NEEDED, REQURIED OR VALID. FIX THIS ISSUE BEFORE NEXT RELEASE
+        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8 }); 
         
         bool isPlaying = false;
         Timer playTimer;
@@ -33,7 +33,7 @@ namespace GameOfLife
             LifeBoard.Loaded += InitializeProgram;
 			Closed += MainWindow_Closed;
 
-            new LifeRulesetFileFormat(rules);
+            new LifeRulesetFileFormat(rules); // TODO: testing call, remove when no logner needed
         }
 
         // Misc. actions that must be done when user closes the program

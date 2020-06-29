@@ -4,6 +4,13 @@ using System.Text;
 
 namespace GameOfLife.GameStatus.LifeRulesetFiles
 {
+	// DATA FORMAT
+	// The data is read as a series of strings, with a total length of 13 lines
+	// It begins with the char 'G' (GrowthArray), followed by a total of 0-9 numbers in the range of 0-8
+	// Then it is followed by the char 'L' (LivingArray), following the same number rules
+	// Then 'D' (DyingArray), same rule
+	// Then 'E' to denote the end of file
+	// The numbers are not allowed to repeat
 	public class LifeRulesetFileFormat
 	{
 		// defined number of lines there must be to be valid in this format

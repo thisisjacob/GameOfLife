@@ -42,7 +42,7 @@ namespace GameOfLife.Windows.SetupMenu
 		public void RecolorBoxes(ListBox living, ListBox growing, ListBox dying)
 		{
 			if (living.Items.Count != 9 || growing.Items.Count != 9 || dying.Items.Count != 9)
-				throw new ArgumentException("One of the given ListBox does not have 10 items");
+				throw new ArgumentException("One of the given ListBox does not have 9 items");
 			for (int i = 0; i < 9; i++)
 			{
 				if (selectedLivingNumbers.Contains(i))
