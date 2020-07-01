@@ -75,12 +75,24 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			}
 			data.Add("E");
 
-			IsValid = ValidateFileFormat(data);
+			try
+			{
+				IsValid = ValidateFileFormat(data);
+			}
+			catch (FormatException) // TODO: should open a menu informing of problem with creating data
+			{
+
+			}
+			catch (ArgumentNullException) // TODO: should open a menu informing of problem with creating data
+			{
+
+			}
 
 			return data;
 		}
 
-
+		// Returns true if the given list conforms to the Data Format specification for LifeRuleset at the top of this file
+		// Returns false if it does not conform
 		public bool ValidateFileFormat(List<string> data)
 		{
 			HashSet<int> numbers = new HashSet<int>();
@@ -89,15 +101,18 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			// check order according to format specification
 			else if (ORDER_CHECK_REGEX.IsMatch(data.ToString()))
 				return false;
-			int i = 0;
 			foreach (string item in data)
 			{
-				if (Char.IsDigit((char)item))
+				if (Char.IsDigit(Convert.ToChar(item)))
 				{
-					numbers.Append((int)item);
+					// no exception check required because the this only fires if item is a digit
+					numbers.Add(Int32.Parse(item));
 				}
 			}
-			return false;
+
+
+			// if there are mission digits, return false. otherwise, since all other checks are complete, return true
+			return !LifeRuleset.AreThereAnyMissingDigitsSingleSet(numbers);
 		}
 	}
 }

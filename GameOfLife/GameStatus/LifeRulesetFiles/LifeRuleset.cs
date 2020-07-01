@@ -12,6 +12,8 @@ namespace GameOfLife
         readonly int[] neighborsToLive;
         readonly int[] neighborsToDie;
 
+		readonly static int[] REQUIRED_DIGITS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
         // Initializes the ruleset
         // givenGrowthArray holds the number of neighbors that leads to a new live cell
         // givenLiveArray holds the number of neighbors that keep the cell the same
@@ -82,5 +84,19 @@ namespace GameOfLife
             // if there are no elements in digitsLeft remaining, return false. otherwise, there are missing digits, so return true
             return (digitsLeft.Count != 0);
         }
+
+        // Returns true if the HashSet is missing and items that are required to be in a LifeRuleset
+        // Done by ensuring at each item in the REQUIRED_DIGITS field is in the values HashSet
+        public static bool AreThereAnyMissingDigitsSingleSet(HashSet<int> values)
+		{
+            foreach (int item in REQUIRED_DIGITS)
+			{
+                if (!values.Contains(item))
+				{
+                    return false;
+				}
+			}
+            return true;
+		}
     }
 }
