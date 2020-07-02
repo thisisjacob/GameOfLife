@@ -8,9 +8,9 @@ namespace GameOfLife
 {
     public class LifeRuleset
     {
-        readonly int[] neighborsToGrow;
-        readonly int[] neighborsToLive;
-        readonly int[] neighborsToDie;
+        readonly int[] NeighborsToGrow;
+        readonly int[] NeighborsToLive;
+        readonly int[] NeighborsToDie;
 
 		readonly static int[] REQUIRED_DIGITS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
@@ -31,28 +31,28 @@ namespace GameOfLife
             }
             else // the ruleset is valid, initialize variables
             {
-                neighborsToGrow = givenGrowthArray;
-                neighborsToLive = givenLiveArray;
-                neighborsToDie = givenDeathArray;
+                NeighborsToGrow = givenGrowthArray;
+                NeighborsToLive = givenLiveArray;
+                NeighborsToDie = givenDeathArray;
             }
         }
 
         // Returns an int[] of the digits of neighbors that lead to a cell coming alive
         public int[] GetGrowthArray()
         {
-            return (int[])neighborsToGrow.Clone();
+            return (int[])NeighborsToGrow.Clone();
         }
 
         // Returns an int[] of the digits of neighbors that lead to a cell remaining alive (or dead)
         public int[] GetLivingArray()
         {
-            return (int[])neighborsToLive.Clone();
+            return (int[])NeighborsToLive.Clone();
         }
 
         // Returns an int[] of the digits of neighbors that lead to a cell dying (or remaining dead)
         public int[] GetDeathArray()
         {
-            return (int[])neighborsToDie.Clone();
+            return (int[])NeighborsToDie.Clone();
         }
 
         // Compares three int arrays

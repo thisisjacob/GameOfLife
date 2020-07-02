@@ -9,13 +9,13 @@ namespace GameOfLife
     // Has methods for retrieving the length of the x/y axis of the bool[,], with each axis of equal length
     public class GameState
     {
-        readonly int cellLengthNum;
-        readonly int cellLengthPixels;
-        bool[,] lifeCells;
-        readonly Stack<bool[,]> lifeCellsHistory;
-        readonly LifeRuleset currentRules;
-        int xIndexOfLastModifiedCell;
-        int yIndexOfLastModifiedCell;
+        readonly int CellLengthNum;
+        readonly int CellLengthPixels;
+        bool[,] LifeCells;
+        readonly Stack<bool[,]> LifeCellsHistory;
+        readonly LifeRuleset CurrentRules;
+        int XIndexOfLastModifiedCell;
+        int YIndexOfLastModifiedCell;
 
         // Initializes GameState with a length of the given gameWidth
         // Integer must be greater than 0, an ArgumentOutOfRangeException is thrown if it is less than 0
@@ -27,45 +27,45 @@ namespace GameOfLife
             if (pixelsWidth != pixelsHeight)
                 throw new ArgumentException("Error creating new GameState: Height and Width are not equal.");
 
-            lifeCellsHistory = new Stack<bool[,]>();
-            cellLengthNum = gameWidth;
-            cellLengthPixels = pixelsWidth;
-            lifeCells = new bool[gameWidth, gameWidth];
-            currentRules = givenRules;
-            xIndexOfLastModifiedCell = -1;
-            yIndexOfLastModifiedCell = -1;
+            LifeCellsHistory = new Stack<bool[,]>();
+            CellLengthNum = gameWidth;
+            CellLengthPixels = pixelsWidth;
+            LifeCells = new bool[gameWidth, gameWidth];
+            CurrentRules = givenRules;
+            XIndexOfLastModifiedCell = -1;
+            YIndexOfLastModifiedCell = -1;
         }
 
         // Returns the length of the both sides of the game board as an int
         public int Length()
         {
-            return cellLengthNum;
+            return CellLengthNum;
         }
 
         // Returns the bool[,] array holding the status of every cell
         public bool[,] GameStatus()
         {
-            return lifeCells;
+            return LifeCells;
         }
 
         // Iterates through each cell in a board and returns an array holding the dead/alive status of the new turn
         public void GameStep()
         {
-            lifeCellsHistory.Push((bool[,])lifeCells.Clone());
-            bool[,] newBoard = new bool[cellLengthNum, cellLengthNum]; // temporary array for holding modifications
-            for (int i = 0; i < cellLengthNum; i++)
-                for (int j = 0; j < cellLengthNum; j++)
+            LifeCellsHistory.Push((bool[,])LifeCells.Clone());
+            bool[,] newBoard = new bool[CellLengthNum, CellLengthNum]; // temporary array for holding modifications
+            for (int i = 0; i < CellLengthNum; i++)
+                for (int j = 0; j < CellLengthNum; j++)
                     newBoard[i, j] = NewCellStatus(i, j);
-            lifeCells = newBoard;
+            LifeCells = newBoard;
         }
 
 
-        // Moves the lifeCells bool[,] back one step in its history
+        // Moves the LifeCells bool[,] back one step in its history
         public void GoBackStep()
         {
             try
             {
-                lifeCells = (bool[,])lifeCellsHistory.Pop().Clone();
+                LifeCells = (bool[,])LifeCellsHistory.Pop().Clone();
             }
             // nothing needs to be done
             catch(InvalidOperationException) 
@@ -76,18 +76,18 @@ namespace GameOfLife
         // Otherwise, set the selected cell to true
         public void SwitchStatus(int j, int i, bool isDragged)
         {
-            var xCell = (int)(j / ((double)cellLengthPixels / cellLengthNum));
-            var yCell = (int)(i / ((double)cellLengthPixels / cellLengthNum));
+            var xCell = (int)(j / ((double)CellLengthPixels / CellLengthNum));
+            var yCell = (int)(i / ((double)CellLengthPixels / CellLengthNum));
 
-            if ((!isDragged || xCell != xIndexOfLastModifiedCell || yCell != yIndexOfLastModifiedCell) &&
+            if ((!isDragged || xCell != XIndexOfLastModifiedCell || yCell != YIndexOfLastModifiedCell) &&
                 BoundaryCheck(xCell, yCell, 0, 0))
 			{
-                if (lifeCells[yCell, xCell] == true)
-                    lifeCells[yCell, xCell] = false;
+                if (LifeCells[yCell, xCell] == true)
+                    LifeCells[yCell, xCell] = false;
                 else
-                    lifeCells[yCell, xCell] = true;
-                xIndexOfLastModifiedCell = xCell;
-                yIndexOfLastModifiedCell = yCell;
+                    LifeCells[yCell, xCell] = true;
+                XIndexOfLastModifiedCell = xCell;
+                YIndexOfLastModifiedCell = yCell;
             }
         }
 
@@ -97,17 +97,17 @@ namespace GameOfLife
         // Return false otherwise
         private bool NewCellStatus(int i, int j)
         {
-            bool status = lifeCells[i, j];
+            bool status = LifeCells[i, j];
             int liveNeighbors = 0;
 
             for (int y = -1; y < 2; y++)
                 for (int x = -1; x < 2; x++)
-                    if (BoundaryCheck(i, j, y, x) && !(y == 0 && x == 0) && lifeCells[i + y, j + x])
+                    if (BoundaryCheck(i, j, y, x) && !(y == 0 && x == 0) && LifeCells[i + y, j + x])
                         liveNeighbors++;
 
-            if (currentRules.GetDeathArray().Contains(liveNeighbors))
+            if (CurrentRules.GetDeathArray().Contains(liveNeighbors))
                 status = false;
-            else if (currentRules.GetGrowthArray().Contains(liveNeighbors))
+            else if (CurrentRules.GetGrowthArray().Contains(liveNeighbors))
                 status = true;
 
             return status;
@@ -117,10 +117,10 @@ namespace GameOfLife
         // Returns false otherwise
         private bool BoundaryCheck(int i, int j, int plusI, int plusJ)
         {
-            if ((i + plusI) < 0 || (i + plusI) > cellLengthNum - 1)
+            if ((i + plusI) < 0 || (i + plusI) > CellLengthNum - 1)
                 return false;
 
-            if ((j + plusJ) < 0 || (j + plusJ) > cellLengthNum - 1)
+            if ((j + plusJ) < 0 || (j + plusJ) > CellLengthNum - 1)
                 return false;
 
             return true;

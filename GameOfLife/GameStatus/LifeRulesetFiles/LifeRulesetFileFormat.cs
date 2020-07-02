@@ -24,7 +24,7 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 		const string LIVING_START = "L";
 		const string DYING_START = "D";
 		const string END = "E";
-		static Regex ORDER_CHECK_REGEX = new Regex(@"G(\d*)L(\d*)D(\d*)E");
+		readonly static Regex ORDER_CHECK_REGEX = new Regex(@"G(\d*)L(\d*)D(\d*)E");
 
 		// these will be modified during program runntime, rather than being treated as constants
 		readonly List<int> GrowthList;

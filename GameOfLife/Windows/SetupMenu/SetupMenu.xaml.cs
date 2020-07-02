@@ -54,7 +54,7 @@ namespace GameOfLife
 		// For use outside of the SetupMenu. For converting helper into a LifeRuleset for the program
 		public LifeRuleset NewRuleset()
 		{
-			return new LifeRuleset(helper.selectedGrowthNumbers.ToArray(), helper.selectedLivingNumbers.ToArray(), helper.selectedDyingNumbers.ToArray());
+			return new LifeRuleset(helper.SelectedGrowthNumbers.ToArray(), helper.SelectedLivingNumbers.ToArray(), helper.SelectedDyingNumbers.ToArray());
 		}
 
 		// Returns the new Length of the board. Should be given to a new GameState object, and the game board should be redrawn

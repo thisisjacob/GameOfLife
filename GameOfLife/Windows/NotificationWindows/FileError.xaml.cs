@@ -22,7 +22,7 @@ namespace GameOfLife.Windows.NotificationWindows
 	public partial class FileError : Window
 	{
 		// binded to window textbox
-		string ErrorMessage;
+		readonly string ErrorMessage;
 
 		public FileError(string errorInformation)
 		{
