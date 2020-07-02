@@ -5,10 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using GameOfLife.Windows.NotificationWindows;
-// TODO: FINISH CREATING DATA VALIDATION FUNCTION
-// TODO: CREATE FUNCTIONS TO RETURN DATA OR A LifeRuleset
-// TODO: maybe use List<char> instead of List<string> for lines?
-// TODO: TEST VALIDATION FUNCTION ONCE COMPLETE WITH DIFFERENT EXAMPLES OF NUMBER_OF_LINES LENGTH DATA
 namespace GameOfLife.GameStatus.LifeRulesetFiles
 {
 	// DATA FORMAT
@@ -20,8 +16,9 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 	// The numbers are not allowed to repeat
 	public class LifeRulesetFileFormat
 	{
+		// CONSTANTS:
 		// defined number of lines there must be to be valid in this format
-		// it is the total possible number of unique digits (0-8) + number of needed string tags ("G", "L", "D", "E") (4) 
+		// it is the total possible number of unique digits in (0-8) + number of needed string tags ("G", "L", "D", "E") (4) 
 		const int NUMBER_OF_LINES = 13;
 		const string GROWTH_START = "G";
 		const string LIVING_START = "L";
@@ -29,18 +26,19 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 		const string END = "E";
 		static Regex ORDER_CHECK_REGEX = new Regex(@"G(\d*)L(\d*)D(\d*)E");
 
-		// true as long as conversion to or from file is valid
-		bool IsValid; // TODO: probably will not need this if a FileError notifying issue with reading data is done instead. removal would simplify things.
+		// these will be modified during program runntime, rather than being treated as constants
 		readonly List<int> GrowthList;
 		readonly List<int> LivingList;
 		readonly List<int> DyingList;
-		List<string> Data; // TODO: may be possible to remove this as well
+		// if there is a problem converting a LifeRuleset to file, return this to restore original LifeRuleset
+		readonly LifeRuleset RulesetToReturn;
 
 		// Converts a List of strings representing lines from a file
 		// Should be 13 characters in length, beginning with a G followed by 0-9 digits, then an L followed by 0-9 digits, then a D, followed by 0-9 digits, then an E
 		// With each digit in the list being entirely unique
 		// if fileLines can be converted into a valid LifeRuleset, then GetIsValid() will return true after initialization
-		public LifeRulesetFileFormat(List<string> fileLines)
+		// currentRuleset is the LifeRuleset currently in use by the main program. It is returned by ReturnLifeRuleset if loading data fails
+		public LifeRulesetFileFormat(LifeRuleset currentRuleset, List<string> fileLines)
 		{
 			GrowthList = new List<int>();
 			LivingList = new List<int>();
@@ -50,11 +48,14 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 				if (!ValidateFileFormat(fileLines))
 					throw new FileFormatException();
 				CreateRuleset(fileLines);
+				RulesetToReturn = new LifeRuleset(GrowthList.ToArray(), LivingList.ToArray(), DyingList.ToArray());
+
 			}
 			catch (FileFormatException)
 			{
 				FileError window = new FileError("The provided data is invalid.");
 				window.ShowDialog();
+				RulesetToReturn = currentRuleset;
 			}
 		}
 
@@ -65,7 +66,6 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			GrowthList = new List<int>(rulesetToWrite.GetGrowthArray());
 			LivingList = new List<int>(rulesetToWrite.GetLivingArray());
 			DyingList = new List<int>(rulesetToWrite.GetDeathArray());
-			Data = FormatToFile();
 		}	
 
 		// returns the data in this object as a List<string>, IsValid set to true if successful
@@ -121,7 +121,6 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 
 		// Assuming that the provided data from a file or user provided List<string> has been successfully validated, this will add the numbers in data to their appropriate rulesets
 		// This LifeRulesetFileFormat will then be ready to be converted to file
-		// Problems with data may lead to an ArgumentNullException or FormatException from converting strings to chars
 		void CreateRuleset(List<string> data)
 		{
 			// checks if the current instance of LifeRulesetFileFormat already has a defined ruleset, ends function call if so
@@ -142,6 +141,13 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 				else if (lastRuleSection.Equals(DYING_START))
 					DyingList.Add(Int32.Parse(item));
 			}
+		}
+
+		// Returns a LifeRuleset created by data that was provided in the constructor, assuming it was found to be valid using the data format specification
+		// Otherwise, returns the LifeRuleset that was provided in the constructor
+		public LifeRuleset ReturnLifeRuleset()
+		{
+			return RulesetToReturn;
 		}
 	}
 }
