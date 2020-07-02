@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using GameOfLife.Windows.NotificationWindows;
 // TODO: FINISH CREATING DATA VALIDATION FUNCTION
 // TODO: CREATE FUNCTIONS TO RETURN DATA OR A LifeRuleset
 // TODO: maybe use List<char> instead of List<string> for lines?
@@ -107,11 +108,11 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			}
 			catch (FormatException) // TODO: should open a menu informing of problem with creating data
 			{
-
+				new FileError("DEVELOPER ERROR: FormatException calling ValidateFileFormat(List<string> data) in LifeRulesetFileFormat");
 			}
 			catch (ArgumentNullException) // TODO: should open a menu informing of problem with creating data
 			{
-
+				new FileError("DEVELOPER ERROR: ArgumentNullException calling ValidateFileFormat(List<string> data in LifeRulesetFileFormat)\nThere is an issue with provided data.");
 			}
 
 			return data;
@@ -140,5 +141,7 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			// if there are mission digits, return false. otherwise, since all other checks are complete, return true
 			return !LifeRuleset.AreThereAnyMissingDigitsSingleSet(numbers);
 		}
+
+		// TODO: CREATE FUNCTION FOR CONVERTING DATA INTO A LIFE RULESET
 	}
 }
