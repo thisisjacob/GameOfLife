@@ -2,6 +2,7 @@
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using GameOfLife.GameStatus.LifeRulesetFiles;
 
@@ -32,8 +33,6 @@ namespace GameOfLife
             InitializeComponent();
             LifeBoard.Loaded += InitializeProgram;
 			Closed += MainWindow_Closed;
-
-            new LifeRulesetFileFormat(rules); // TODO: testing call, remove when no logner needed
         }
 
         // Misc. actions that must be done when user closes the program

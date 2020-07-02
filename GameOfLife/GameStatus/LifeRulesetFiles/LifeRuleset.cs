@@ -85,18 +85,19 @@ namespace GameOfLife
             return (digitsLeft.Count != 0);
         }
 
-        // Returns true if the HashSet is missing and items that are required to be in a LifeRuleset
-        // Done by ensuring at each item in the REQUIRED_DIGITS field is in the values HashSet
+        // Returns true if the HashSet values is missing digits that are required to be in a LifeRuleset,
+        // Returns false if this aspect is valid
+        // Done by checking that each item in the REQUIRED_DIGITS array is in the values HashSet
         public static bool AreThereAnyMissingDigitsSingleSet(HashSet<int> values)
 		{
             foreach (int item in REQUIRED_DIGITS)
 			{
                 if (!values.Contains(item))
 				{
-                    return false;
+                    return true;
 				}
 			}
-            return true;
+            return false;
 		}
     }
 }

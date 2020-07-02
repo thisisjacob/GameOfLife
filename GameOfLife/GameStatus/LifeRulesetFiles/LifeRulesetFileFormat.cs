@@ -25,7 +25,7 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 		const string LIVING_START = "L";
 		const string DYING_START = "D";
 		const string END = "E";
-		Regex ORDER_CHECK_REGEX = new Regex(@"G(\d*)L(\d*)D(\d*)E");
+		static Regex ORDER_CHECK_REGEX = new Regex(@"G(\d*)L(\d*)D(\d*)E");
 
 		// true as long as conversion to or from file is valid
 		bool IsValid; 
@@ -40,9 +40,19 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 		// if fileLines can be converted into a valid LifeRuleset, then GetIsValid() will return true after initialization
 		public LifeRulesetFileFormat(List<string> fileLines)
 		{
+			if (ValidateFileFormat(fileLines))
+			{
+				IsValid = true;
+				// Call function for converting 
+			}
+			else
+			{
+				IsValid = false;
+			}
 		}
 
 		// Converts a preexisting LifeRuleset and its fields into a List<string> that can easily be written to file
+		// Should be called when you want to write to file
 		public LifeRulesetFileFormat(LifeRuleset rulesetToWrite)
 		{
 			GrowthList = new List<int>(rulesetToWrite.GetGrowthArray());
@@ -50,6 +60,22 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			DyingList = new List<int>(rulesetToWrite.GetDeathArray());
 			Data = FormatToFile();
 		}
+
+		
+		// If data has been sucessfully read to this from a List<string> or a LifeRuleset has been passed as a constructor, then this returns a LifeRuleset if it creation was valid
+		// Otherwise, it will create a FormatException to signify problems with format conversion
+		public LifeRuleset CreateLifeRuleset()
+		{
+			if (IsValid)
+			{
+				return new LifeRuleset(GrowthList.ToArray(), LivingList.ToArray(), DyingList.ToArray());
+			}
+			else
+			{
+				throw new FormatException();
+			}
+		}
+		
 
 		// returns the data in this object as a List<string>, IsValid set to true if successful
 		// where each line is either "G", "L", "D", each denoting the start of information for growing, living or dying arrays
@@ -93,7 +119,7 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 
 		// Returns true if the given list conforms to the Data Format specification for LifeRuleset at the top of this file
 		// Returns false if it does not conform
-		public bool ValidateFileFormat(List<string> data)
+		public static bool ValidateFileFormat(List<string> data)
 		{
 			HashSet<int> numbers = new HashSet<int>();
 			if (data.Count != NUMBER_OF_LINES)
@@ -109,7 +135,7 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 					numbers.Add(Int32.Parse(item));
 				}
 			}
-
+			// no check for repeated numbers is needed because the check for both count and no missing digits prevents the possibility of repeats being accepted
 
 			// if there are mission digits, return false. otherwise, since all other checks are complete, return true
 			return !LifeRuleset.AreThereAnyMissingDigitsSingleSet(numbers);
