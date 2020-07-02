@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,11 +30,11 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 		static Regex ORDER_CHECK_REGEX = new Regex(@"G(\d*)L(\d*)D(\d*)E");
 
 		// true as long as conversion to or from file is valid
-		bool IsValid; 
+		bool IsValid; // TODO: probably will not need this if a FileError notifying issue with reading data is done instead. removal would simplify things.
 		readonly List<int> GrowthList;
 		readonly List<int> LivingList;
 		readonly List<int> DyingList;
-		List<string> Data;
+		List<string> Data; // TODO: may be possible to remove this as well
 
 		// Converts a List of strings representing lines from a file
 		// Should be 13 characters in length, beginning with a G followed by 0-9 digits, then an L followed by 0-9 digits, then a D, followed by 0-9 digits, then an E
@@ -41,14 +42,19 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 		// if fileLines can be converted into a valid LifeRuleset, then GetIsValid() will return true after initialization
 		public LifeRulesetFileFormat(List<string> fileLines)
 		{
-			if (ValidateFileFormat(fileLines))
+			GrowthList = new List<int>();
+			LivingList = new List<int>();
+			DyingList = new List<int>();
+			try
 			{
-				IsValid = true;
-				// Call function for converting 
+				if (!ValidateFileFormat(fileLines))
+					throw new FileFormatException();
+				CreateRuleset(fileLines);
 			}
-			else
+			catch (FileFormatException)
 			{
-				IsValid = false;
+				FileError window = new FileError("The provided data is invalid.");
+				window.ShowDialog();
 			}
 		}
 
@@ -60,23 +66,7 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			LivingList = new List<int>(rulesetToWrite.GetLivingArray());
 			DyingList = new List<int>(rulesetToWrite.GetDeathArray());
 			Data = FormatToFile();
-		}
-
-		
-		// If data has been sucessfully read to this from a List<string> or a LifeRuleset has been passed as a constructor, then this returns a LifeRuleset if it creation was valid
-		// Otherwise, it will create a FormatException to signify problems with format conversion
-		public LifeRuleset CreateLifeRuleset()
-		{
-			if (IsValid)
-			{
-				return new LifeRuleset(GrowthList.ToArray(), LivingList.ToArray(), DyingList.ToArray());
-			}
-			else
-			{
-				throw new FormatException();
-			}
-		}
-		
+		}	
 
 		// returns the data in this object as a List<string>, IsValid set to true if successful
 		// where each line is either "G", "L", "D", each denoting the start of information for growing, living or dying arrays
@@ -101,19 +91,6 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 				data.Add(num.ToString());
 			}
 			data.Add("E");
-
-			try
-			{
-				IsValid = ValidateFileFormat(data);
-			}
-			catch (FormatException) // TODO: should open a menu informing of problem with creating data
-			{
-				new FileError("DEVELOPER ERROR: FormatException calling ValidateFileFormat(List<string> data) in LifeRulesetFileFormat");
-			}
-			catch (ArgumentNullException) // TODO: should open a menu informing of problem with creating data
-			{
-				new FileError("DEVELOPER ERROR: ArgumentNullException calling ValidateFileFormat(List<string> data in LifeRulesetFileFormat)\nThere is an issue with provided data.");
-			}
 
 			return data;
 		}
@@ -142,6 +119,29 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 			return !LifeRuleset.AreThereAnyMissingDigitsSingleSet(numbers);
 		}
 
-		// TODO: CREATE FUNCTION FOR CONVERTING DATA INTO A LIFE RULESET
+		// Assuming that the provided data from a file or user provided List<string> has been successfully validated, this will add the numbers in data to their appropriate rulesets
+		// This LifeRulesetFileFormat will then be ready to be converted to file
+		// Problems with data may lead to an ArgumentNullException or FormatException from converting strings to chars
+		void CreateRuleset(List<string> data)
+		{
+			// checks if the current instance of LifeRulesetFileFormat already has a defined ruleset, ends function call if so
+			if (GrowthList.Count != 0 || LivingList.Count != 0 || DyingList.Count != 0)
+				return;
+
+			// updates lastRuleSection with the Growing/Living/Dying tag of the current region of data
+			// adds index that is currently being parsed to appropriate List for LifeRuleset rules
+			string lastRuleSection = "";
+			foreach (string item in data)
+			{
+				if (!Char.IsDigit(Convert.ToChar(item)))
+					lastRuleSection = item;
+				else if (lastRuleSection.Equals(GROWTH_START))
+					GrowthList.Add(Int32.Parse(item));
+				else if (lastRuleSection.Equals(LIVING_START))
+					LivingList.Add(Int32.Parse(item));
+				else if (lastRuleSection.Equals(DYING_START))
+					DyingList.Add(Int32.Parse(item));
+			}
+		}
 	}
 }
