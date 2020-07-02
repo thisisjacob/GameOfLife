@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Channels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,14 +14,21 @@ using System.Windows.Shapes;
 namespace GameOfLife.Windows.NotificationWindows
 {
 	/// <summary>
-	/// Interaction logic for FileWriteError.xaml
-	/// This is used for displaying information when there is an error writing to file
+	/// Interaction logic for FileError.xaml
 	/// </summary>
-	public partial class FileWriteError : Window
+	/// 
+
+
+	public partial class FileError : Window
 	{
-		public FileWriteError()
+		// binded to window textbox
+		string ErrorMessage;
+
+		public FileError(string errorInformation)
 		{
 			InitializeComponent();
+			ErrorMessage = errorInformation;
+			CloseButton.Click += (sender, args) => this.Close();
 		}
 	}
 }
