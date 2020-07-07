@@ -34,7 +34,6 @@ namespace GameOfLife
             InitializeComponent();
             LifeBoard.Loaded += InitializeProgram;
 			Closed += MainWindow_Closed;
-            FileManagement.FileManagement.ReadLifeRulesetFromFile(Rules, "test.txt");
         }
 
         // Misc. actions that must be done when user closes the program

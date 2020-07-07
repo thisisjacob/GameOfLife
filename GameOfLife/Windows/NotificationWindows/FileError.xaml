@@ -14,8 +14,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center"
-                   Text="{Binding Source=ErrorMessage}">
+        <TextBlock Name="ErrorBlock" Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center">
         </TextBlock>
         <Button Name="CloseButton" Grid.Row="1" Width="60" Height="20">
             Close

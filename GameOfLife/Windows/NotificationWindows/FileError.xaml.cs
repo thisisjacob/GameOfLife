@@ -23,14 +23,11 @@ namespace GameOfLife.Windows.NotificationWindows
 
 	public partial class FileError : Window
 	{
-		// binded to window textbox
-		readonly string ErrorMessage;
-
 		public FileError(string errorInformation)
 		{
 			InitializeComponent();
-			ErrorMessage = errorInformation;
 			CloseButton.Click += (sender, args) => this.Close();
+			ErrorBlock.Text = errorInformation;
 		}
 	}
 }
