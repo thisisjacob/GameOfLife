@@ -1,11 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using GameOfLife.FileManagement;
-using GameOfLife.GameStatus.LifeRulesetFiles;
 
 namespace GameOfLife
 {
@@ -55,6 +55,9 @@ namespace GameOfLife
 			PlayTimer.Elapsed += TimerEvent;
             PlayTimer.AutoReset = true;
             PlayTimer.Enabled = true;
+
+            FileReadWrite.WriteLifeRulesetToFile(Rules, "test.xml");
+            FileReadWrite.ReadLifeRulesetFromFile("test.xml");
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state

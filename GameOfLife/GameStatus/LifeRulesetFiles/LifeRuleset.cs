@@ -8,9 +8,9 @@ namespace GameOfLife
 {
     public class LifeRuleset
     {
-        readonly int[] NeighborsToGrow;
-        readonly int[] NeighborsToLive;
-        readonly int[] NeighborsToDie;
+        public int[] NeighborsToGrow;
+        public int[] NeighborsToLive;
+        public int[] NeighborsToDie;
 
 		readonly static int[] REQUIRED_DIGITS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
@@ -21,6 +21,29 @@ namespace GameOfLife
         // Throws an ArgumentException if either array shares values with another array, or if there are missing digits (0-9) in the sum of all three arrays
         public LifeRuleset(int[] givenGrowthArray, int[] givenLiveArray, int[] givenDeathArray)
         {
+            if (DoArraysIntersect(givenGrowthArray, givenLiveArray, givenDeathArray)) // if there is a shared value, the ruleset is invalid. throw exception
+            {
+                throw new ArgumentException("The rulesets are invalid: Shared values");
+            }
+            else if (AreThereAnyMissingDigits(givenGrowthArray, givenLiveArray, givenDeathArray)) // if there are any missing digits (0-9), the ruleset is invalid. throw exception
+            {
+                throw new ArgumentException("The rulesets are invalid: Missing digits");
+            }
+            else // the ruleset is valid, initialize variables
+            {
+                NeighborsToGrow = givenGrowthArray;
+                NeighborsToLive = givenLiveArray;
+                NeighborsToDie = givenDeathArray;
+            }
+        }
+
+        // Parameter-less constructor for serializing
+        public LifeRuleset() { }
+
+        // Performs the same initialization function as the constructor with parameters
+        // Should only be called, and always be called, when you are using the .NET XML serialization class
+        public void InitializeForSerialization(int[] givenGrowthArray, int[] givenLiveArray, int[] givenDeathArray)
+		{
             if (DoArraysIntersect(givenGrowthArray, givenLiveArray, givenDeathArray)) // if there is a shared value, the ruleset is invalid. throw exception
             {
                 throw new ArgumentException("The rulesets are invalid: Shared values");
