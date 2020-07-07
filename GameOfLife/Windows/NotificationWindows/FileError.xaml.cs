@@ -18,6 +18,8 @@ namespace GameOfLife.Windows.NotificationWindows
 	/// </summary>
 	/// 
 
+	//TODO: make errorInformation set text of main TextBlock
+
 
 	public partial class FileError : Window
 	{

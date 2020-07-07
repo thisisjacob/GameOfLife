@@ -51,11 +51,9 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 				RulesetToReturn = new LifeRuleset(GrowthList.ToArray(), LivingList.ToArray(), DyingList.ToArray());
 
 			}
-			catch (FileFormatException)
+			catch
 			{
-				FileError window = new FileError("The provided data is invalid.");
-				window.ShowDialog();
-				RulesetToReturn = currentRuleset;
+				throw;
 			}
 		}
 
