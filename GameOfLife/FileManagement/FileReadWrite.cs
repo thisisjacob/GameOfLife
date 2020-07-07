@@ -10,26 +10,45 @@ namespace GameOfLife.FileManagement
 	public static class FileReadWrite
 	{
 
-
-		public static void WriteLifeRulesetToFile(LifeRuleset rules, string path)
+		// Writes the information in the given LifeRuleset rules to the XML file with path defined by path
+		// May throw typical FileStream creation or read errors
+		public static void WriteLifeRulesetToXMLFile(LifeRuleset rules, string path)
 		{
-			LifeRuleset item = new LifeRuleset();
-			item.InitializeForSerialization(rules.GetGrowthArray(), rules.GetLivingArray(), rules.GetDeathArray());
-			XmlSerializer write = new XmlSerializer(typeof(LifeRuleset));
-			FileStream file = File.Create(path);
+			try
+			{
+				LifeRuleset item = new LifeRuleset();
+				item.InitializeForSerialization(rules.GetGrowthArray(), rules.GetLivingArray(), rules.GetDeathArray());
+				XmlSerializer write = new XmlSerializer(typeof(LifeRuleset));
+				FileStream file = File.Create(path);
 
-			write.Serialize(file, item);
-			file.Close();
+				write.Serialize(file, item);
+				file.Close();
+			}
+			catch
+			{
+				throw;
+			}
+
 		}
 
-		public static LifeRuleset ReadLifeRulesetFromFile(string path)
+		// Reads information in a given XML file defined by path and turns it into a LifeRuleset
+		// Can throw typical FileStream creation or read errors
+		public static LifeRuleset ReadLifeRulesetFromXMLFile(string path)
 		{
-			LifeRuleset item;
-			XmlSerializer read = new XmlSerializer(typeof(LifeRuleset));
-			StreamReader reader = new StreamReader(path);
-			item = (LifeRuleset)read.Deserialize(reader);
+			try
+			{
 
-			return item;
+				LifeRuleset item;
+				XmlSerializer read = new XmlSerializer(typeof(LifeRuleset));
+				StreamReader reader = new StreamReader(path);
+				item = (LifeRuleset)read.Deserialize(reader);
+
+				return item;
+			}
+			catch
+			{
+				throw;
+			}
 		}
 
 
