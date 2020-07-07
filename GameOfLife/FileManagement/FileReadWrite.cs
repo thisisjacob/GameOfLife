@@ -4,9 +4,9 @@ using System.Text;
 
 namespace GameOfLife.FileManagement
 {
-	public static class GameStateFileReadWrite
+	public static class FileReadWrite
 	{
-		public static void WriteToFile(GameStateFile data)
+		public static void WriteToFile()
 		{
 
 		}
