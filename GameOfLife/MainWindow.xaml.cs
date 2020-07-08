@@ -55,9 +55,6 @@ namespace GameOfLife
 			PlayTimer.Elapsed += TimerEvent;
             PlayTimer.AutoReset = true;
             PlayTimer.Enabled = true;
-
-            FileReadWrite.WriteLifeRulesetToFile(Rules, "test.xml");
-            FileReadWrite.ReadLifeRulesetFromFile("test.xml");
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state

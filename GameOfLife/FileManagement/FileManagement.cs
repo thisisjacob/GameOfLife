@@ -10,20 +10,36 @@ namespace GameOfLife.FileManagement
 {
 	static class FileManagement
 	{
-		// Attempts to read a LifeRuleset from the given path file
-		// If an error is caught, ErrorCatcher is called to show the user information about the error
-		// backup is then returned instead
-		public static LifeRuleset GetRulesetFromFile(string path, LifeRuleset backup)
+
+		public static object GetGameStatusObjectFromFile(string path, object itemObject)
 		{
+			string newPath = PathWithObjectTypeAppended(path, itemObject);
 			try
 			{
-				return FileReadWrite.ReadLifeRulesetFromXMLFile(path);
+				if (itemObject.GetType() == typeof(LifeRuleset))
+				{
+					return FileReadWrite.ReadObjectFromXMLFile(newPath, (LifeRuleset)itemObject);
+				}
+				else if (itemObject.GetType() == typeof(GameState))
+				{
+					return FileReadWrite.ReadObjectFromXMLFile(newPath, (GameState)itemObject);
+				}
+				// if it is not one of the valid types, then the argument is invalid and it throws an exception
+				else
+				{
+					throw new ArgumentException();
+				}
 			}
 			catch (Exception e)
 			{
 				ErrorCatcher(e);
-				return backup;
+				return itemObject;
 			}
+		}
+
+		// Returns path, altered so that it has the full type name of itemobject at the end, with a .xml extension
+		static string PathWithObjectTypeAppended(string path, object itemObject) {
+			return Path.GetFileNameWithoutExtension(path) + itemObject.GetType().ToString() + ".xml";
 		}
 
 		// TODO: create ruleset function

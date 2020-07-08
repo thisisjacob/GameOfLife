@@ -28,20 +28,18 @@ namespace GameOfLife.FileManagement
 			{
 				throw;
 			}
-
 		}
 
 		// Reads information in a given XML file defined by path and turns it into a LifeRuleset
 		// Can throw typical FileStream creation or read errors
-		public static LifeRuleset ReadLifeRulesetFromXMLFile(string path)
+		public static T ReadObjectFromXMLFile<T>(string path, T objectType)
 		{
 			try
 			{
-
-				LifeRuleset item;
-				XmlSerializer read = new XmlSerializer(typeof(LifeRuleset));
+				T item;
+				XmlSerializer read = new XmlSerializer(typeof(T));
 				StreamReader reader = new StreamReader(path);
-				item = (LifeRuleset)read.Deserialize(reader);
+				item = (T)read.Deserialize(reader);
 
 				return item;
 			}
@@ -50,8 +48,5 @@ namespace GameOfLife.FileManagement
 				throw;
 			}
 		}
-
-
-
 	}
 }
