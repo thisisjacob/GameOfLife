@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using GameOfLife.FileManagement;
+using GameOfLife.Windows.FileManagementWindows;
 
 namespace GameOfLife
 {
@@ -55,6 +56,9 @@ namespace GameOfLife
 			PlayTimer.Elapsed += TimerEvent;
             PlayTimer.AutoReset = true;
             PlayTimer.Enabled = true;
+
+            LoadFile newWindow = new LoadFile();
+            newWindow.ShowDialog();
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state

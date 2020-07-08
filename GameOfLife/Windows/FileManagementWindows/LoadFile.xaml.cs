@@ -20,6 +20,7 @@ namespace GameOfLife.Windows.FileManagementWindows
 		public LoadFile()
 		{
 			InitializeComponent();
+			Files.ItemsSource = FileManagementHelper.XMLFiles();
 		}
 	}
 }
