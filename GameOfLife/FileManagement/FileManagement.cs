@@ -10,19 +10,17 @@ namespace GameOfLife.FileManagement
 {
 	static class FileManagement
 	{
-
+		// Returns an object from an XML file in the same directory as the executable, assuming that the file is accessible and the given itemObject is of
+		// Type: LifeRuleset
+		// path is the path to read from, itemObject is a backup object that is returned if reading fails
+		// NOTE: Result must be typecasted to type of itemObject, only an object type is returned
 		public static object GetGameStatusObjectFromFile(string path, object itemObject)
 		{
-			string newPath = PathWithObjectTypeAppended(path, itemObject);
 			try
 			{
 				if (itemObject.GetType() == typeof(LifeRuleset))
 				{
-					return FileReadWrite.ReadObjectFromXMLFile(newPath, (LifeRuleset)itemObject);
-				}
-				else if (itemObject.GetType() == typeof(GameState))
-				{
-					return FileReadWrite.ReadObjectFromXMLFile(newPath, (GameState)itemObject);
+					return FileReadWrite.ReadObjectFromXMLFile(path, (LifeRuleset)itemObject);
 				}
 				// if it is not one of the valid types, then the argument is invalid and it throws an exception
 				else
@@ -37,12 +35,27 @@ namespace GameOfLife.FileManagement
 			}
 		}
 
-		// Returns path, altered so that it has the full type name of itemobject at the end, with a .xml extension
-		static string PathWithObjectTypeAppended(string path, object itemObject) {
-			return Path.GetFileNameWithoutExtension(path) + itemObject.GetType().ToString() + ".xml";
+		// Writes itemObject to an XML file as specified by path
+		// Must be of 
+		// Type: LifeRuleset
+		public static void WriteGameStatusObjectToFile(string path, object itemObject)
+		{
+			try
+			{
+				if (itemObject.GetType() == typeof(LifeRuleset))
+				{
+					FileReadWrite.WriteLifeRulesetToXMLFile((LifeRuleset)itemObject, path);
+				}
+				else
+				{
+					throw new ArgumentException();
+				}
+			}
+			catch (Exception e)
+			{
+				ErrorCatcher(e);
+			}
 		}
-
-		// TODO: create ruleset function
 		
 		// TODO: More ErrorCatcher possibilities
 		static void ErrorCatcher(Exception e)
