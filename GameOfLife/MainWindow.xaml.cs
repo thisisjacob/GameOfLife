@@ -158,6 +158,13 @@ namespace GameOfLife
             IsPlaying = false;
 		}
 
+        // Opens a LoadFile window
+        void LoadClick(object sender, RoutedEventArgs e)
+		{
+            LoadFile window = new LoadFile(Rules);
+            window.ShowDialog();
+		}
+
         // Fires every COUNTER_TIME
         // if enabled by Play, redraws the LifeBoard with a GameStep for mainGame
         void TimerEvent(object source, ElapsedEventArgs e)

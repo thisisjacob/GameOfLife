@@ -47,7 +47,7 @@
                 <Button Name="Save">
                     Save Game
                 </Button>
-                <Button Name="Load">
+                <Button Name="Load" Click="LoadClick">
                     Load Game
                 </Button>
                 <Button Name="Setup" Click="OpenSetupMenu" Grid.Row="0" Grid.Column="4">

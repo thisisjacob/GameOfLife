@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Controls;
 
 namespace GameOfLife.Windows.FileManagementWindows
 {
 	public static class FileManagementHelper
 	{
 		const string XML_TAG = "*.xml";
+
 		// Returns an array with a string array of the name of each XML file in the current directory
 		// Extensions are stripped
 		public static string[] XMLFiles()
@@ -21,6 +23,14 @@ namespace GameOfLife.Windows.FileManagementWindows
 			}
 
 			return items;
+		}
+
+		// Retrieves a LifeRuleset using the content of item, assuming item is just the name of the path to an XML file, without
+		// its extension or full directory
+		public static LifeRuleset SelectLifeRulesetFromFileItem(string item, LifeRuleset previousSelected)
+		{
+			string path = Directory.GetCurrentDirectory() + "\\" + item + ".xml";
+			return FileManagement.FileManagement.GetGameStatusObjectFromFile(path, previousSelected);
 		}
 	}
 }

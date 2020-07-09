@@ -17,10 +17,21 @@ namespace GameOfLife.Windows.FileManagementWindows
 	/// </summary>
 	public partial class LoadFile : Window
 	{
-		public LoadFile()
+		LifeRuleset BackupRuleset;
+		LifeRuleset SelectedRuleset;
+
+		public LoadFile(LifeRuleset backup)
 		{
 			InitializeComponent();
 			Files.ItemsSource = FileManagementHelper.XMLFiles();
+			BackupRuleset = backup;
+		}
+
+		// sets BackupRuleset to be the LifeRuleset currently selected in the Files ListBox
+		void NewSelectedItem(object sender, RoutedEventArgs e)
+		{
+			ListBox list = (ListBox)sender;
+			SelectedRuleset = FileManagementHelper.SelectLifeRulesetFromFileItem((string)list.SelectedItem, BackupRuleset);
 		}
 	}
 }
