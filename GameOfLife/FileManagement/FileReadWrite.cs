@@ -32,7 +32,7 @@ namespace GameOfLife.FileManagement
 
 		// Reads information in a given XML file defined by path and turns it into a LifeRuleset
 		// Can throw typical FileStream creation or read errors
-		public static T ReadObjectFromXMLFile<T>(string path, T objectType)
+		public static T ReadObjectFromXMLFile<T>(string path) where T : class
 		{
 			try
 			{

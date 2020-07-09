@@ -14,13 +14,13 @@ namespace GameOfLife.FileManagement
 		// Type: LifeRuleset
 		// path is the path to read from, itemObject is a backup object that is returned if reading fails
 		// NOTE: Result must be typecasted to type of itemObject, only an object type is returned
-		public static object GetGameStatusObjectFromFile(string path, object itemObject)
+		public static T GetGameStatusObjectFromFile<T>(string path, T itemObject) where T : class
 		{
 			try
 			{
 				if (itemObject.GetType() == typeof(LifeRuleset))
 				{
-					return FileReadWrite.ReadObjectFromXMLFile(path, (LifeRuleset)itemObject);
+					return FileReadWrite.ReadObjectFromXMLFile<T>(path);
 				}
 				// if it is not one of the valid types, then the argument is invalid and it throws an exception
 				else
