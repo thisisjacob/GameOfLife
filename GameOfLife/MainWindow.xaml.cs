@@ -158,12 +158,19 @@ namespace GameOfLife
             IsPlaying = false;
 		}
 
-        // Opens a LoadFile window
+        // Opens a LoadFile window, sets Rules to its results
         void LoadClick(object sender, RoutedEventArgs e)
 		{
             LoadFile window = new LoadFile(Rules);
             window.ShowDialog();
             Rules = window.ReturnResult();
+		}
+
+        // Opens a SaveFile window
+        void SaveClick(object sender, RoutedEventArgs e)
+		{
+            SaveFile window = new SaveFile();
+            window.ShowDialog();
 		}
 
         // Fires every COUNTER_TIME
