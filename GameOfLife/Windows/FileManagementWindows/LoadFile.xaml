@@ -15,7 +15,7 @@
         <ListBox Name="Files" Grid.Row="0" SelectionChanged="NewSelectedItem">
         </ListBox>
 
-        <Button Name="Select" Grid.Row="1">
+        <Button Name="Select" Grid.Row="1" Click="Submitted">
             Select Ruleset
         </Button>
     </Grid>

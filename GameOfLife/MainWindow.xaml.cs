@@ -163,6 +163,7 @@ namespace GameOfLife
 		{
             LoadFile window = new LoadFile(Rules);
             window.ShowDialog();
+            Rules = window.ReturnResult();
 		}
 
         // Fires every COUNTER_TIME
