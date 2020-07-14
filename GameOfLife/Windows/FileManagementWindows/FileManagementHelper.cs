@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Controls;
+using GameOfLife.GameStatus.LifeRulesetFiles;
 
 namespace GameOfLife.Windows.FileManagementWindows
 {
@@ -27,7 +29,7 @@ namespace GameOfLife.Windows.FileManagementWindows
 
 		// Retrieves a LifeRuleset using the content of item, assuming item is just the name of the path to an XML file, without
 		// its extension or full directory
-		public static LifeRuleset SelectLifeRulesetFromFileItem(string item, LifeRuleset previousSelected)
+		public static T SelectLifeRulesetFromFileItem<T>(string item, T previousSelected) where T : ISerializable, new()
 		{
 			string path = Directory.GetCurrentDirectory() + "\\" + item + ".xml";
 			return FileManagement.FileManagement.GetGameStatusObjectFromFile(path, previousSelected);

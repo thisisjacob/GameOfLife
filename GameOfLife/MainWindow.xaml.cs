@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using GameOfLife.FileManagement;
+using GameOfLife.GameStatus.LifeRulesetFiles;
 using GameOfLife.Windows.FileManagementWindows;
 
 namespace GameOfLife

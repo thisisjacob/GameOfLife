@@ -4,24 +4,23 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace GameOfLife.FileManagement
 {
 	public static class FileReadWrite
 	{
 
-		// Writes the information in the given LifeRuleset rules to the XML file with path defined by path
-		// May throw typical FileStream creation or read errors
-		public static void WriteLifeRulesetToXMLFile(LifeRuleset rules, string path)
+		// Writes itemObject to a file specified by path through XML serialization
+		// itemObject must implement ISerializable
+		public static void WriteLifeSerializableToFile<T>(T itemObject, string path) where T : ISerializable
 		{
 			try
 			{
-				LifeRuleset item = new LifeRuleset();
-				item.InitializeForSerialization(rules.GetGrowthArray(), rules.GetLivingArray(), rules.GetDeathArray());
-				XmlSerializer write = new XmlSerializer(typeof(LifeRuleset));
+				XmlSerializer write = new XmlSerializer(typeof(T));
 				FileStream file = File.Create(path);
 
-				write.Serialize(file, item);
+				write.Serialize(file, itemObject);
 				file.Close();
 			}
 			catch
@@ -30,9 +29,10 @@ namespace GameOfLife.FileManagement
 			}
 		}
 
-		// Reads information in a given XML file defined by path and turns it into a LifeRuleset
+		// Reads information in a given XML file defined by path and turns it into a new object of the type specified by T
 		// Can throw typical FileStream creation or read errors
-		public static T ReadObjectFromXMLFile<T>(string path) where T : class
+		// T must implement ISerializable
+		public static T ReadObjectFromXMLFile<T>(string path) where T : ISerializable
 		{
 			try
 			{

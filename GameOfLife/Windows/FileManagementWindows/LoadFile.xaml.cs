@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GameOfLife.GameStatus.LifeRulesetFiles;
 
 namespace GameOfLife.Windows.FileManagementWindows
 {
@@ -33,7 +34,11 @@ namespace GameOfLife.Windows.FileManagementWindows
 		void NewSelectedItem(object sender, RoutedEventArgs e)
 		{
 			ListBox list = (ListBox)sender;
-			SelectedRuleset = FileManagementHelper.SelectLifeRulesetFromFileItem((string)list.SelectedItem, BackupRuleset);
+			if (BackupRuleset != null)
+			{
+				LifeRulesetSerializer toSerialize = new LifeRulesetSerializer(BackupRuleset);
+				SelectedRuleset = FileManagementHelper.SelectLifeRulesetFromFileItem((string)list.SelectedItem, toSerialize).ConvertToLifeRuleset();
+			}
 		}
 
 		void Submitted(object sender, RoutedEventArgs e)

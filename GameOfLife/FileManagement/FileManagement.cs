@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
 using GameOfLife.Windows.NotificationWindows;
 
@@ -10,11 +11,10 @@ namespace GameOfLife.FileManagement
 {
 	static class FileManagement
 	{
-		// Returns an object from an XML file in the same directory as the executable, assuming that the file is accessible and the given itemObject is of
-		// Type: LifeRuleset
+		// Returns an object from an XML file in the same directory as the executable, assuming that the file is accessible and the given itemObject implements
+		// ISerializable and has a parameterless constructor
 		// path is the path to read from, itemObject is a backup object that is returned if reading fails
-		// NOTE: Result must be typecasted to type of itemObject, only an object type is returned
-		public static T GetGameStatusObjectFromFile<T>(string path, T itemObject) where T : class
+		public static T GetGameStatusObjectFromFile<T>(string path, T itemObject) where T : ISerializable, new()
 		{
 			try
 			{
@@ -36,20 +36,13 @@ namespace GameOfLife.FileManagement
 		}
 
 		// Writes itemObject to an XML file as specified by path
-		// Must be of 
-		// Type: LifeRuleset
-		public static void WriteGameStatusObjectToFile(string path, object itemObject)
+		// Must implement ISerializable, and have a parameterless constructor
+		public static void WriteGameStatusObjectToFile<T>(string path, T itemObject) where T : ISerializable, new()
 		{
 			try
 			{
-				if (itemObject.GetType() == typeof(LifeRuleset))
-				{
-					FileReadWrite.WriteLifeRulesetToXMLFile((LifeRuleset)itemObject, path);
-				}
-				else
-				{
-					throw new ArgumentException();
-				}
+				FileReadWrite.WriteLifeSerializableToFile(itemObject, path);
+
 			}
 			catch (Exception e)
 			{
