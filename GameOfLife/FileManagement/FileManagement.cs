@@ -1,10 +1,8 @@
 ﻿// This is the main class for interacting wi
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
 using GameOfLife.Windows.NotificationWindows;
 
 namespace GameOfLife.FileManagement

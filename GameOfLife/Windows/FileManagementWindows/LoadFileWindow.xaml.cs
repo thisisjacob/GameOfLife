@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using GameOfLife.GameStatus.LifeRulesetFiles;
 
 namespace GameOfLife.Windows.FileManagementWindows
@@ -16,16 +7,16 @@ namespace GameOfLife.Windows.FileManagementWindows
 	/// <summary>
 	/// Interaction logic for LoadFile.xaml
 	/// </summary>
-	public partial class LoadFile : Window
+	public partial class LoadFileWindow : Window
 	{
 		LifeRuleset BackupRuleset;
 		LifeRuleset SelectedRuleset;
 		bool IsSubmitted;
 
-		public LoadFile(LifeRuleset backup)
+		public LoadFileWindow(LifeRuleset backup)
 		{
 			InitializeComponent();
-			Files.ItemsSource = FileManagementHelper.XMLFiles();
+			Files.ItemsSource = FileManagementWindowsHelper.XMLFiles();
 			BackupRuleset = backup;
 			IsSubmitted = false;
 		}
@@ -37,7 +28,7 @@ namespace GameOfLife.Windows.FileManagementWindows
 			if (BackupRuleset != null)
 			{
 				LifeRulesetSerializer toSerialize = new LifeRulesetSerializer(BackupRuleset);
-				SelectedRuleset = FileManagementHelper.SelectLifeRulesetFromFileItem((string)list.SelectedItem, toSerialize).ConvertToLifeRuleset();
+				SelectedRuleset = FileManagementWindowsHelper.SelectLifeRulesetFromFileItem((string)list.SelectedItem, toSerialize).ConvertToLifeRuleset();
 			}
 		}
 

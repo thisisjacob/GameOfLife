@@ -1,21 +1,17 @@
 ﻿using System;
-using System.IO;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using GameOfLife.FileManagement;
-using GameOfLife.GameStatus.LifeRulesetFiles;
 using GameOfLife.Windows.FileManagementWindows;
 
 namespace GameOfLife
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
 
-    public partial class MainWindow : Window
+	public partial class MainWindow : Window
     {
         // Object for holding the current status of the game
         GameState MainGame; 
@@ -162,7 +158,7 @@ namespace GameOfLife
         // Opens a LoadFile window, sets Rules to its results
         void LoadClick(object sender, RoutedEventArgs e)
 		{
-            LoadFile window = new LoadFile(Rules);
+            LoadFileWindow window = new LoadFileWindow(Rules);
             window.ShowDialog();
             Rules = window.ReturnResult();
 		}
@@ -170,7 +166,7 @@ namespace GameOfLife
         // Opens a SaveFile window
         void SaveClick(object sender, RoutedEventArgs e)
 		{
-            SaveFile window = new SaveFile();
+            SaveFileWindow window = new SaveFileWindow();
             window.ShowDialog();
 		}
 

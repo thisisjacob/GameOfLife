@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Windows.Controls;
-using GameOfLife.GameStatus.LifeRulesetFiles;
 
 namespace GameOfLife.Windows.FileManagementWindows
 {
-	public static class FileManagementHelper
+	public static class FileManagementWindowsHelper
 	{
 		const string XML_TAG = "*.xml";
 
