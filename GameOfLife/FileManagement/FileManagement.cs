@@ -16,15 +16,7 @@ namespace GameOfLife.FileManagement
 		{
 			try
 			{
-				if (itemObject.GetType() == typeof(LifeRuleset))
-				{
-					return FileReadWrite.ReadObjectFromXMLFile<T>(path);
-				}
-				// if it is not one of the valid types, then the argument is invalid and it throws an exception
-				else
-				{
-					throw new ArgumentException();
-				}
+				return FileReadWrite.ReadObjectFromXMLFile<T>(path);
 			}
 			catch (Exception e)
 			{
@@ -35,7 +27,7 @@ namespace GameOfLife.FileManagement
 
 		// Writes itemObject to an XML file as specified by path
 		// Must implement ISerializable, and have a parameterless constructor
-		public static void WriteGameStatusObjectToFile<T>(string path, T itemObject) where T : ISerializable, new()
+		public static void WriteGameStatusObjectToFile<T>(string path, T itemObject) where T : ISerializable
 		{
 			try
 			{
@@ -48,17 +40,38 @@ namespace GameOfLife.FileManagement
 			}
 		}
 		
-		// TODO: More ErrorCatcher possibilities
+		// Accepts an Exception e, and opens a new FileError window showing a message for that exception
+		// Assuming it is an UnauthorizedAccessException, ArgumentException, ArgumentNullException, DirectoryNotFoundException, or an IOException
+		// If it is not one of these, then the caught error is thrown because that means it cannot be user or computer error
 		static void ErrorCatcher(Exception e)
 		{
 			FileError window;
-			if (e.GetType() == typeof(FileFormatException))
+			if (e.GetType() == typeof(UnauthorizedAccessException))
 			{
-				window = new FileError("The data format in the file is invalid.");
+				window = new FileError("You do not have access to this file.");
 				window.ShowDialog();
 			}
-			
-			
+			else if (e.GetType() == typeof(ArgumentException) || e.GetType() == typeof(ArgumentNullException))
+			{
+				window = new FileError("The specified path is empty.");
+				window.ShowDialog();
+			}
+			else if (e.GetType() == typeof(DirectoryNotFoundException))
+			{
+				window = new FileError("This item was not found.");
+				window.ShowDialog();
+			}
+			else if (e.GetType() == typeof(IOException))
+			{
+				window = new FileError("There was an issue in managing the file.");
+				window.ShowDialog();
+			}
+			else // if it reaches this point, then it is a developer error and signals that something is wrong with the program itself
+			{
+				throw e;
+			}
+
+
 		}
 
 	}
