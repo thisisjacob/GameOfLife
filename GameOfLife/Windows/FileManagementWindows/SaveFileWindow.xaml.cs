@@ -31,10 +31,11 @@ namespace GameOfLife.Windows.FileManagementWindows
 			{
 				foreach(ISerializable item in Items)
 				{
-					// TODO: TEST THIS CHECK, THEN SETUP SAVING FOR LIFERULESET IN MainWindow
+					// TODO: check writer
 					FileManagement.FileManagement.WriteGameStatusObjectToFile(FileName.Text, item);
 				}
 				Close();
+
 			}
 			// alternative for creating notification of preexisting file
 		}

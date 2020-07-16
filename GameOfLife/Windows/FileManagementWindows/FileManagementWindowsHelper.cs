@@ -35,8 +35,8 @@ namespace GameOfLife.Windows.FileManagementWindows
 		public static bool IsSaveDirectoryUnique(string fileName)
 		{
 			string dir = Directory.GetCurrentDirectory();
-			dir += "\\" + fileName;
-			return !Directory.Exists(dir);
+			dir += "\\" + fileName + ".xml";
+			return !File.Exists(dir);
 		}
 	}
 }
