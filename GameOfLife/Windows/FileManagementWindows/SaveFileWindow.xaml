@@ -16,7 +16,7 @@
             
         </TextBox>
 
-        <Button Name="Submit" Grid.Row="1">
+        <Button Name="SubmitButton" Grid.Row="1" Click="Submit">
             
         </Button>
         

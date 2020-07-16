@@ -29,5 +29,14 @@ namespace GameOfLife.Windows.FileManagementWindows
 			string path = Directory.GetCurrentDirectory() + "\\" + item + ".xml";
 			return FileManagement.FileManagement.GetGameStatusObjectFromFile(path, previousSelected);
 		}
+
+		// Returns true if the passed string for a file name does not exist in the current directory
+		// Returns false if this is not the case
+		public static bool IsSaveDirectoryUnique(string fileName)
+		{
+			string dir = Directory.GetCurrentDirectory();
+			dir += "\\" + fileName;
+			return !Directory.Exists(dir);
+		}
 	}
 }
