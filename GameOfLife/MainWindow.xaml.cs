@@ -128,9 +128,7 @@ namespace GameOfLife
         // Opens a menu for setting the RuleSet and GameState
         void OpenSetupMenu(object sender, RoutedEventArgs e)
         {
-            // stops redrawing while SetupMenu is open
-            IsPlaying = false; 
-            PlayTimer.Stop();
+            PauseGameWhileMenuOpen();
 
             SetupMenu setupPage = new SetupMenu(Rules, MainGame);
             setupPage.ShowDialog();
@@ -140,8 +138,7 @@ namespace GameOfLife
             // creates new board, cannot reuse old rectangles
             DrawingHelper.DrawGameBoard(LifeBoard, MainGame);
 
-            // continues redrawing
-            PlayTimer.Start();
+            UnpauseGame();
         }
 
         // Make LifeBoard redraw with a new GameStep every COUNTER_TIME time
@@ -156,20 +153,36 @@ namespace GameOfLife
             IsPlaying = false;
 		}
 
+        void PauseGameWhileMenuOpen()
+		{
+            IsPlaying = false;
+            PlayTimer.Stop();
+		}
+
+        void UnpauseGame()
+		{
+            PlayTimer.Start();
+		}
+
         // Opens a LoadFile window, sets Rules to its results
         void LoadClick(object sender, RoutedEventArgs e)
 		{
+            PauseGameWhileMenuOpen();
             LoadFileWindow window = new LoadFileWindow(Rules);
             window.ShowDialog();
             Rules = window.ReturnResult();
-		}
+            MainGame = new GameState(MainGame.Length(), (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, Rules);
+            UnpauseGame();
+        }
 
         // Opens a SaveFile window
         void SaveClick(object sender, RoutedEventArgs e)
 		{
+            PauseGameWhileMenuOpen();
             SaveFileWindow window = new SaveFileWindow();
             window.AddSavableItem(new LifeRulesetSerializer(Rules));
             window.ShowDialog();
+            UnpauseGame();
 		}
 
         // Fires every COUNTER_TIME
