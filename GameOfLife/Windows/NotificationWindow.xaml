@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife.Windows"
         mc:Ignorable="d"
-        Title="FileError" Height="300" Width="300">
+        Title="Notification" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

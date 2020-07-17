@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife"
         mc:Ignorable="d"
-        Title="Setup Menu" Height="500" Width="600"
+        Title="Setup Rules" Height="500" Width="600"
         ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="StackPanel">
