@@ -11,23 +11,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GameOfLife.Windows.NotificationWindows
+namespace GameOfLife.Windows
 {
 	/// <summary>
 	/// Interaction logic for FileError.xaml
 	/// </summary>
 	/// 
 
-	//TODO: make errorInformation set text of main TextBlock
-
-
-	public partial class FileError : Window
+	public partial class NotificationWindow : Window
 	{
-		public FileError(string errorInformation)
+		// Opens the window with notificationInformation set as the text shown to the user.
+		public NotificationWindow(string notificationInformation)
 		{
 			InitializeComponent();
 			CloseButton.Click += (sender, args) => this.Close();
-			ErrorBlock.Text = errorInformation;
+			ErrorBlock.Text = notificationInformation;
 		}
 	}
 }

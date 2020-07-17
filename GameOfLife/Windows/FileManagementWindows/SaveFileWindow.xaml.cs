@@ -31,8 +31,13 @@ namespace GameOfLife.Windows.FileManagementWindows
 				FileManagement.FileManagement.WriteGameStatusObjectToFile(FileName.Text, Item);
 				Close();
 			}
-			// TODO: notification for already existing file name or null item
-
+			// because we want to do nothing if Item is null
+			// informs the user if the file already exists
+			else if (Item != null)
+			{
+				NotificationWindow window = new NotificationWindow("A file with this name already exists.");
+				window.ShowDialog();
+			}
 		}
 	}
 }

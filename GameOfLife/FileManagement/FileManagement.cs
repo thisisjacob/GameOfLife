@@ -3,7 +3,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization;
-using GameOfLife.Windows.NotificationWindows;
+using GameOfLife.Windows;
 
 namespace GameOfLife.FileManagement
 {
@@ -40,30 +40,30 @@ namespace GameOfLife.FileManagement
 			}
 		}
 		
-		// Accepts an Exception e, and opens a new FileError window showing a message for that exception
+		// Accepts an Exception e, and opens a new NotificationWindow window showing a message for that exception
 		// Assuming it is an UnauthorizedAccessException, ArgumentException, ArgumentNullException, DirectoryNotFoundException, or an IOException
 		// If it is not one of these, then the caught error is thrown because that means it cannot be user or computer error
 		static void ErrorCatcher(Exception e)
 		{
-			FileError window;
+			NotificationWindow window;
 			if (e.GetType() == typeof(UnauthorizedAccessException))
 			{
-				window = new FileError("You do not have access to this file.");
+				window = new NotificationWindow("You do not have access to this file.");
 				window.ShowDialog();
 			}
 			else if (e.GetType() == typeof(ArgumentException) || e.GetType() == typeof(ArgumentNullException))
 			{
-				window = new FileError("The specified path is empty.");
+				window = new NotificationWindow("The specified path is empty.");
 				window.ShowDialog();
 			}
 			else if (e.GetType() == typeof(DirectoryNotFoundException))
 			{
-				window = new FileError("This item was not found.");
+				window = new NotificationWindow("This item was not found.");
 				window.ShowDialog();
 			}
 			else if (e.GetType() == typeof(IOException))
 			{
-				window = new FileError("There was an issue in managing the file.");
+				window = new NotificationWindow("There was an issue in managing the file.");
 				window.ShowDialog();
 			}
 			else // if it reaches this point, then it is a developer error and signals that something is wrong with the program itself
