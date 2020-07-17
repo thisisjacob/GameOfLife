@@ -13,7 +13,7 @@ namespace GameOfLife.FileManagement
 		{
 			try
 			{
-				XmlSerializer write = new XmlSerializer(typeof(T));
+				XmlSerializer write = new XmlSerializer(itemObject.GetType());
 				FileStream file = File.Create(path);
 
 				write.Serialize(file, itemObject);

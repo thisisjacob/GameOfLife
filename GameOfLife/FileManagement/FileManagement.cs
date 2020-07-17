@@ -11,7 +11,7 @@ namespace GameOfLife.FileManagement
 	{
 		// Returns an object from an XML file in the same directory as the executable, assuming that the file is accessible and the given itemObject implements
 		// ISerializable and has a parameterless constructor
-		// path is the path to read from, itemObject is a backup object that is returned if reading fails
+		// path is the path to read from, including extension name, itemObject is a backup object that is returned if reading fails
 		public static T GetGameStatusObjectFromFile<T>(string path, T itemObject) where T : ISerializable, new()
 		{
 			try

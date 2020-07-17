@@ -3,6 +3,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using GameOfLife.GameStatus.LifeRulesetFiles;
 using GameOfLife.Windows.FileManagementWindows;
 
 namespace GameOfLife
@@ -167,6 +168,7 @@ namespace GameOfLife
         void SaveClick(object sender, RoutedEventArgs e)
 		{
             SaveFileWindow window = new SaveFileWindow();
+            window.AddSavableItem(new LifeRulesetSerializer(Rules));
             window.ShowDialog();
 		}
 

@@ -10,34 +10,29 @@ namespace GameOfLife.Windows.FileManagementWindows
 	// Because it uses XML serialization for saving
 	public partial class SaveFileWindow : Window
 	{
-		List<ISerializable> Items;
+		ISerializable Item;
 		public SaveFileWindow()
 		{
 			InitializeComponent();
-			Items = new List<ISerializable>();
 		}
 
 		// Adds an item you wish to save to the save window. Must be called with at least one item to actually save anything to file
 		public void AddSavableItem<T>(T item) where T : ISerializable, new()
 		{
-			Items.Add(item);
+			Item = item;
 		}
 
 		// If valid, save and close program
 		// If invalid (file already exists in directory), then notify user
 		void Submit(object sender, RoutedEventArgs e)
 		{
-			if (FileManagementWindowsHelper.IsSaveDirectoryUnique(FileName.Text))
+			if (FileManagementWindowsHelper.IsSaveDirectoryUnique(FileName.Text) && Item != null)
 			{
-				foreach(ISerializable item in Items)
-				{
-					// TODO: check writer
-					FileManagement.FileManagement.WriteGameStatusObjectToFile(FileName.Text, item);
-				}
+				FileManagement.FileManagement.WriteGameStatusObjectToFile(FileName.Text, Item);
 				Close();
-
 			}
-			// alternative for creating notification of preexisting file
+			// TODO: notification for already existing file name or null item
+
 		}
 	}
 }
