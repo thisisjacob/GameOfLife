@@ -12,12 +12,15 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBox Name="FileName" Grid.Row="0">
-            
-        </TextBox>
+        <DockPanel Width="400" Height="100">
+            <Label DockPanel.Dock="Top" Content="Enter File Name Below" BorderBrush="Black" BorderThickness="1">
+            </Label>
+            <TextBox Name="FileName" Grid.Row="0" Width="400" Height="40">
+            </TextBox>
+        </DockPanel>
 
-        <Button Name="SubmitButton" Grid.Row="1" Click="Submit">
-            
+
+        <Button Name="SubmitButton" Grid.Row="1" Click="Submit" Width="400" Height="40" Content="Save Ruleset">
         </Button>
         
     </Grid>
