@@ -3,16 +3,18 @@ using System.Runtime.Serialization;
 
 namespace GameOfLife.Windows.FileManagementWindows
 {
+	//
 	public static class FileManagementWindowsHelper
 	{
-		const string XML_TAG = "*.xml";
+		const string XML_TAG = ".xml";
+		const string XML_REGEX = "*.xml";
 
 		// Returns an array with a string array of the name of each XML file in the current directory
 		// Extensions are stripped
 		public static string[] XMLFiles()
 		{
 			string currentDir = Directory.GetCurrentDirectory();
-			string[] items = Directory.GetFiles(currentDir, XML_TAG);
+			string[] items = Directory.GetFiles(currentDir, XML_REGEX);
 			
 			for (int i = 0; i < items.Length; i++)
 			{
@@ -26,7 +28,7 @@ namespace GameOfLife.Windows.FileManagementWindows
 		// its extension or full directory
 		public static T SelectLifeRulesetFromFileItem<T>(string item, T previousSelected) where T : ISerializable, new()
 		{
-			string path = Directory.GetCurrentDirectory() + "\\" + item + ".xml";
+			string path = Directory.GetCurrentDirectory() + "\\" + item + XML_TAG;
 			return FileManagement.FileManagement.GetGameStatusObjectFromFile(path, previousSelected);
 		}
 
@@ -35,7 +37,7 @@ namespace GameOfLife.Windows.FileManagementWindows
 		public static bool IsSaveDirectoryUnique(string fileName)
 		{
 			string dir = Directory.GetCurrentDirectory();
-			dir += "\\" + fileName;
+			dir += "\\" + fileName + XML_TAG;
 			return !File.Exists(dir);
 		}
 	}

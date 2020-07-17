@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GameOfLife
 {
-    // A class for holding information about the current run of the game
+    // A class for holding information about the current run of the game, including the state of the board and game rules
     // Has methods for retriving a bool[,] that holds the alive/dead status of every cell. 
     // Has methods for retrieving the length of the x/y axis of the bool[,], with each axis of equal length
     public class GameState

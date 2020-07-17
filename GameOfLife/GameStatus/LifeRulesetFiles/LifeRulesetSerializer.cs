@@ -4,8 +4,7 @@ namespace GameOfLife.GameStatus.LifeRulesetFiles
 {
 	// A class for serializing and deserializing LifeRuleset
 	// When serializing, the LifeRuleset passed constructor should be used to provide its data to the serialization process
-	// When deserializing, the SerializationInfo and StreamingContex constructors will be called
-
+	// When deserializing, the SerializationInfo and StreamingContext constructors will be called
 	public class LifeRulesetSerializer : ISerializable
 	{
 		public int[] NeighborsToGrow;

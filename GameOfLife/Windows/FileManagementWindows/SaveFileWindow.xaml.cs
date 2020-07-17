@@ -10,6 +10,7 @@ namespace GameOfLife.Windows.FileManagementWindows
 	// Because it uses XML serialization for saving
 	public partial class SaveFileWindow : Window
 	{
+		const string XML_TAG = ".xml";
 		ISerializable Item;
 		public SaveFileWindow()
 		{
@@ -28,7 +29,7 @@ namespace GameOfLife.Windows.FileManagementWindows
 		{
 			if (FileManagementWindowsHelper.IsSaveDirectoryUnique(FileName.Text) && Item != null)
 			{
-				FileManagement.FileManagement.WriteGameStatusObjectToFile(FileName.Text, Item);
+				FileManagement.FileManagement.WriteGameStatusObjectToFile(FileName.Text + XML_TAG, Item);
 				Close();
 			}
 			// because we want to do nothing if Item is null

@@ -4,6 +4,8 @@ using System.Runtime.Serialization;
 
 namespace GameOfLife.FileManagement
 {
+	// This class is used by the FileManagement class 
+	// It should not be called directly by the program, instead, it should be called through the FileManagement class
 	public static class FileReadWrite
 	{
 

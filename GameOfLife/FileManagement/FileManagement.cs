@@ -1,12 +1,12 @@
-﻿// This is the main class for interacting wi
-
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
 using GameOfLife.Windows;
 
 namespace GameOfLife.FileManagement
 {
+	// The FileManagement class is what should be used by a program to save or write objects to file
+	// FileManagement will catch and report errors, enforce correct types and call the functions for actually reading/writing
 	static class FileManagement
 	{
 		// Returns an object from an XML file in the same directory as the executable, assuming that the file is accessible and the given itemObject implements
