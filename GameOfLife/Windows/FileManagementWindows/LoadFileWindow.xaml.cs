@@ -4,9 +4,7 @@ using GameOfLife.GameStatus.LifeRulesetFiles;
 
 namespace GameOfLife.Windows.FileManagementWindows
 {
-	/// <summary>
-	/// Interaction logic for LoadFile.xaml
-	/// </summary>
+    // For loading .xml objects from file
 	public partial class LoadFileWindow : Window
 	{
 		LifeRuleset BackupRuleset;

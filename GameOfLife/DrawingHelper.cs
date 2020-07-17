@@ -5,6 +5,7 @@ using System.Windows.Shapes;
 
 namespace GameOfLife
 {
+    // Performs the graphics actions needed to render the GameOfLife board for MainWindow
     public static class DrawingHelper
     {
         // Fills the canvas with new and equally sized rectangles representing the cells of the Game of Life

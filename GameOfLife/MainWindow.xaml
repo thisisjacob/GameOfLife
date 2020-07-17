@@ -45,10 +45,10 @@
                     Stop
                 </Button>
                 <Button Name="Save" Click="SaveClick">
-                    Save Game
+                    Save Ruleset
                 </Button>
                 <Button Name="Load" Click="LoadClick">
-                    Load Game
+                    Load Ruleset
                 </Button>
                 <Button Name="Setup" Click="OpenSetupMenu" Grid.Row="0" Grid.Column="4">
                     Setup

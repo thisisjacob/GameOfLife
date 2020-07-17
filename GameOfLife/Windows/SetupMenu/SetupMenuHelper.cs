@@ -5,6 +5,8 @@ using System.Windows.Media;
 
 namespace GameOfLife.Windows.SetupMenu
 {
+	// An instance class that helps with modifying the appearance and status of a SetupMenu, and ensuring that there
+	// are no contradictory rules while the user is making their new LifeRuleset
 	public class SetupMenuHelper
 	{
 		public List<int> SelectedLivingNumbers;
