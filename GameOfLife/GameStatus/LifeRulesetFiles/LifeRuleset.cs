@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace GameOfLife
 {
-    public class LifeRuleset
+    // This class is for holding the current RuleSet used by a given run of GameOfLife
+    // It tells the program how many neighboring cells cause death, growth, or keeping things the same
+    // This class also enforces checks on the rules to make sure they are valid, ensuring that rules
+    // will not conflict, and make use of all possible value
+	public class LifeRuleset
     {
-        readonly int[] neighborsToGrow;
-        readonly int[] neighborsToLive;
-        readonly int[] neighborsToDie;
+        readonly int[] NeighborsToGrow;
+        readonly int[] NeighborsToLive;
+        readonly int[] NeighborsToDie;
+
+		readonly static int[] REQUIRED_DIGITS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
         // Initializes the ruleset
         // givenGrowthArray holds the number of neighbors that leads to a new live cell
@@ -28,28 +33,28 @@ namespace GameOfLife
             }
             else // the ruleset is valid, initialize variables
             {
-                neighborsToGrow = givenGrowthArray;
-                neighborsToLive = givenLiveArray;
-                neighborsToDie = givenDeathArray;
+                NeighborsToGrow = givenGrowthArray;
+                NeighborsToLive = givenLiveArray;
+                NeighborsToDie = givenDeathArray;
             }
         }
 
         // Returns an int[] of the digits of neighbors that lead to a cell coming alive
         public int[] GetGrowthArray()
         {
-            return (int[])neighborsToGrow.Clone();
+            return (int[])NeighborsToGrow.Clone();
         }
 
         // Returns an int[] of the digits of neighbors that lead to a cell remaining alive (or dead)
         public int[] GetLivingArray()
         {
-            return (int[])neighborsToLive.Clone();
+            return (int[])NeighborsToLive.Clone();
         }
 
         // Returns an int[] of the digits of neighbors that lead to a cell dying (or remaining dead)
         public int[] GetDeathArray()
         {
-            return (int[])neighborsToDie.Clone();
+            return (int[])NeighborsToDie.Clone();
         }
 
         // Compares three int arrays
@@ -66,8 +71,8 @@ namespace GameOfLife
         // If there are no missing digits return false
         public static bool AreThereAnyMissingDigits(int[] first, int[] second, int[] third)
         {
-            List<int> digits = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            List<int> digitsLeft = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            List<int> digits = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+            List<int> digitsLeft = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
             // if an element of digitsLeft is in any of the parameter int arrays, remove that element from digitsLeft
             foreach (int element in digits)
@@ -82,5 +87,19 @@ namespace GameOfLife
             return (digitsLeft.Count != 0);
         }
 
+        // Returns true if the HashSet values is missing digits that are required to be in a LifeRuleset,
+        // Returns false if this aspect is valid
+        // Done by checking that each item in the REQUIRED_DIGITS array is in the values HashSet
+        public static bool AreThereAnyMissingDigitsSingleSet(HashSet<int> values)
+		{
+            foreach (int item in REQUIRED_DIGITS)
+			{
+                if (!values.Contains(item))
+				{
+                    return true;
+				}
+			}
+            return false;
+		}
     }
 }

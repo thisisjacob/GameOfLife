@@ -44,6 +44,12 @@
                 <Button Name="StopButton" Click="Stop" MouseLeave="ButtonLeave" Grid.Row="0" Grid.Column="3">
                     Stop
                 </Button>
+                <Button Name="Save" Click="SaveClick">
+                    Save Ruleset
+                </Button>
+                <Button Name="Load" Click="LoadClick">
+                    Load Ruleset
+                </Button>
                 <Button Name="Setup" Click="OpenSetupMenu" Grid.Row="0" Grid.Column="4">
                     Setup
                 </Button>

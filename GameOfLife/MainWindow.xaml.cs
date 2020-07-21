@@ -3,23 +3,24 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using GameOfLife.GameStatus.LifeRulesetFiles;
+using GameOfLife.Windows.FileManagementWindows;
 
 namespace GameOfLife
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
 
-    public partial class MainWindow : Window
+	public partial class MainWindow : Window
     {
         // Object for holding the current status of the game
-        GameState mainGame; 
+        GameState MainGame; 
         // initialized with default Game of Life rules
-        LifeRuleset rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8, 9 });
+        LifeRuleset Rules = new LifeRuleset(new int[] { 3 }, new int[] { 2 }, new int[] {0, 1, 4, 5, 6, 7, 8 }); 
         
-        bool isPlaying = false;
-        Timer playTimer;
+        bool IsPlaying = false;
+        Timer PlayTimer;
 
         // Constants
         // Default length of LifeBoard
@@ -31,38 +32,38 @@ namespace GameOfLife
         {
             InitializeComponent();
             LifeBoard.Loaded += InitializeProgram;
-			Closed += MainWindow_Closed; 
+			Closed += MainWindow_Closed;
         }
 
         // Misc. actions that must be done when user closes the program
         private void MainWindow_Closed(object sender, EventArgs e)
 		{
-			if (playTimer != null)
+			if (PlayTimer != null)
 			{
-                playTimer.Dispose();
+                PlayTimer.Dispose();
 			}
 		}
 
 		// When fired, erases all the current graphics on the LifeBoard canvas and creates the graphics for the game
 		void InitializeProgram(object sender, EventArgs e)
         {
-            mainGame = new GameState(DEFAULT_LENGTH, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
-            DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
+            MainGame = new GameState(DEFAULT_LENGTH, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, Rules);
+            DrawingHelper.DrawGameBoard(LifeBoard, MainGame);
 
-            playTimer = new Timer(COUNTER_TIME);
-			playTimer.Elapsed += TimerEvent;
-            playTimer.AutoReset = true;
-            playTimer.Enabled = true;
+            PlayTimer = new Timer(COUNTER_TIME);
+			PlayTimer.Elapsed += TimerEvent;
+            PlayTimer.AutoReset = true;
+            PlayTimer.Enabled = true;
         }
 
         // When fired, calculate the next turn, redraw the canvas LifeBoard with the updated state
         void AdvanceStep(object sender, RoutedEventArgs e)
         {
             // prevents modification of board while playing
-            if (!isPlaying)
+            if (!IsPlaying)
 			{
-                mainGame.GameStep();
-                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+                MainGame.GameStep();
+                DrawingHelper.RedrawGameBoard(LifeBoard, MainGame);
             }
         }
 
@@ -70,10 +71,10 @@ namespace GameOfLife
         void ReverseStep(object sender, RoutedEventArgs e)
         {
             // prevents modification of board while playing
-            if (!isPlaying)
+            if (!IsPlaying)
 			{
-                mainGame.GoBackStep();
-                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+                MainGame.GoBackStep();
+                DrawingHelper.RedrawGameBoard(LifeBoard, MainGame);
             }
         }
 
@@ -92,16 +93,16 @@ namespace GameOfLife
         void CanvasMouseMovement(object sender, MouseEventArgs e)
         {
             // prevents needless redrawing while the game is set to play
-            if (!isPlaying)
+            if (!IsPlaying)
 			{
                 Point position = Mouse.GetPosition(sender as Canvas);
                 // if user clicks and drags, then draw cells as they move the mouse
                 if (e.LeftButton == MouseButtonState.Pressed)
 				{
-                    mainGame.SwitchStatus((int)position.X, (int)position.Y, true);
+                    MainGame.SwitchStatus((int)position.X, (int)position.Y, true);
 				}
-                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
-                DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, mainGame);
+                DrawingHelper.RedrawGameBoard(LifeBoard, MainGame);
+                DrawingHelper.DrawHighlightedCell(LifeBoard, (int)position.X, (int)position.Y, MainGame);
             }
         }
 
@@ -109,50 +110,79 @@ namespace GameOfLife
         // Has the effect of removing cell selector
         void CanvasMouseLeftItem(object sender, MouseEventArgs e)
 		{
-            DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+            DrawingHelper.RedrawGameBoard(LifeBoard, MainGame);
 		}
 
         // When fired, finds the position of the cursor, flips the status of the cell (dead/alive or false/true) and then redraws the canvas
         void CanvasCellClicked(object sender, MouseEventArgs e)
         {
             // prevents modification of game while game is set to play
-            if (!isPlaying)
+            if (!IsPlaying)
 			{
                 Point position = Mouse.GetPosition(LifeBoard);
-                mainGame.SwitchStatus((int)position.X, (int)position.Y, false);
-                DrawingHelper.RedrawGameBoard(LifeBoard, mainGame);
+                MainGame.SwitchStatus((int)position.X, (int)position.Y, false);
+                DrawingHelper.RedrawGameBoard(LifeBoard, MainGame);
             }
         }
 
         // Opens a menu for setting the RuleSet and GameState
         void OpenSetupMenu(object sender, RoutedEventArgs e)
         {
-            // stops redrawing while SetupMenu is open
-            isPlaying = false; 
-            playTimer.Stop();
+            PauseGameWhileMenuOpen();
 
-            SetupMenu setupPage = new SetupMenu(rules, mainGame);
+            SetupMenu setupPage = new SetupMenu(Rules, MainGame);
             setupPage.ShowDialog();
-            rules = setupPage.NewRuleset();
+            Rules = setupPage.NewRuleset();
             int length = setupPage.NewGameStateLength();
-            mainGame = new GameState(length, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, rules);
+            MainGame = new GameState(length, (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, Rules);
             // creates new board, cannot reuse old rectangles
-            DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
+            DrawingHelper.DrawGameBoard(LifeBoard, MainGame);
 
-            // continues redrawing
-            playTimer.Start();
+            UnpauseGame();
         }
 
         // Make LifeBoard redraw with a new GameStep every COUNTER_TIME time
         void Play(object sender, RoutedEventArgs e)
 		{
-            isPlaying = true;
+            IsPlaying = true;
         }
 
         // Stops LifeBoard from automatically updating
         void Stop(object sender, RoutedEventArgs e)
 		{
-            isPlaying = false;
+            IsPlaying = false;
+		}
+
+        void PauseGameWhileMenuOpen()
+		{
+            IsPlaying = false;
+            PlayTimer.Stop();
+		}
+
+        void UnpauseGame()
+		{
+            PlayTimer.Start();
+		}
+
+        // Opens a LoadFile window, sets Rules to its results
+        void LoadClick(object sender, RoutedEventArgs e)
+		{
+            PauseGameWhileMenuOpen();
+            LoadFileWindow window = new LoadFileWindow(Rules);
+            window.ShowDialog();
+            Rules = window.ReturnResult();
+            MainGame = new GameState(MainGame.Length(), (int)LifeBoard.ActualWidth, (int)LifeBoard.ActualHeight, Rules);
+            UnpauseGame();
+        }
+
+        // Opens a SaveFile window
+        void SaveClick(object sender, RoutedEventArgs e)
+		{
+            PauseGameWhileMenuOpen();
+            SaveFileWindow window = new SaveFileWindow();
+            window.AddSavableItem(new LifeRulesetSerializer(Rules));
+            window.ShowDialog();
+            UnpauseGame();
 		}
 
         // Fires every COUNTER_TIME
@@ -161,10 +191,10 @@ namespace GameOfLife
 		{
             Dispatcher.Invoke(() =>
             {
-                if (isPlaying)
+                if (IsPlaying)
                 {
-                    mainGame.GameStep();
-                    DrawingHelper.DrawGameBoard(LifeBoard, mainGame);
+                    MainGame.GameStep();
+                    DrawingHelper.DrawGameBoard(LifeBoard, MainGame);
                 }
             });
         }
@@ -172,17 +202,17 @@ namespace GameOfLife
         // stops playing, creates a new timer, sets it to the value of sender (assumed to be a slider)
         void ChangeTimerSpeed(object sender, RoutedEventArgs e)
 		{
-            if (playTimer != null)
+            if (PlayTimer != null)
 			{
                 var givenObject = (Slider)sender;
-                var isPlayingBeforeCall = isPlaying;
-                isPlaying = false;
-                playTimer.Close();
-                playTimer = new Timer(givenObject.Value);
-                playTimer.Elapsed += TimerEvent;
-                playTimer.AutoReset = true;
-                playTimer.Enabled = true;
-                isPlaying = isPlayingBeforeCall;
+                var isPlayingBeforeCall = IsPlaying;
+                IsPlaying = false;
+                PlayTimer.Close();
+                PlayTimer = new Timer(givenObject.Value);
+                PlayTimer.Elapsed += TimerEvent;
+                PlayTimer.AutoReset = true;
+                PlayTimer.Enabled = true;
+                IsPlaying = isPlayingBeforeCall;
             }
         }
     }

@@ -6,9 +6,8 @@ using GameOfLife.Windows.SetupMenu;
 
 namespace GameOfLife
 {
-	/// <summary>
-	/// Interaction logic for SetupMenu.xaml
-	/// </summary>
+	// A window allowing the user to create a new LifeRuleset with their own supplied rules, 
+	// as well as changing the size of the game board
 	public partial class SetupMenu : Window
 	{
 		// Holds LifeRuleset updates, holds helper functions for this window
@@ -17,7 +16,7 @@ namespace GameOfLife
 		string backupEnteredTextString;
 
 		// Constants 
-		int MAXIMUMUM_LENGTH = 100;
+		const int MAXIMUMUM_LENGTH = 100;
 
 		public SetupMenu(LifeRuleset rulesetToModify, GameState currentGame)
 		{
@@ -51,10 +50,10 @@ namespace GameOfLife
 			}
 		}
 
-		// For use outside of the SetupMenu. For converting helper into a LifeRuleset for the program
+		// For use outside of the SetupMenu. For converting helper into a LifeRuleset for the program, must always be called to set the LifeRuleset of the main program
 		public LifeRuleset NewRuleset()
 		{
-			return new LifeRuleset(helper.selectedGrowthNumbers.ToArray(), helper.selectedLivingNumbers.ToArray(), helper.selectedDyingNumbers.ToArray());
+			return new LifeRuleset(helper.SelectedGrowthNumbers.ToArray(), helper.SelectedLivingNumbers.ToArray(), helper.SelectedDyingNumbers.ToArray());
 		}
 
 		// Returns the new Length of the board. Should be given to a new GameState object, and the game board should be redrawn
